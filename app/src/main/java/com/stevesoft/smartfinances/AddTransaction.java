@@ -6,21 +6,66 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.stevesoft.smartfinances.model.Transaction;
 
 
 public class AddTransaction extends ActionBarActivity {
+
+    EditText txtDescription, txtPrice, txtCategory, txtDate, txtAccount;
+    Button btnOK;
+    //DatabaseHelper myDb;
+
+    String description, date;
+    double price;
+    int category, account;
+    //Transaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_transaction);
 
+        txtDescription = (EditText) findViewById(R.id.editDescription);
+        txtPrice = (EditText) findViewById(R.id.editPrice);
+        txtCategory = (EditText) findViewById(R.id.editCategory);
+        txtDate = (EditText) findViewById(R.id.editDate);
+        //txtAccount = (EditText) findViewById(R.id.editAccount);
+        btnOK = (Button) findViewById(R.id.btnOK);
         final Button btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
             }
         });
+
+        insertTransaction();
+    }
+
+    public void insertTransaction(){
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                date = txtDate.getText().toString();
+                description = txtDescription.getText().toString();
+                price = Double.parseDouble(txtPrice.getText().toString());
+                category = Integer.parseInt(txtCategory.getText().toString());
+                //account = Integer.parseInt(txtAccount.getText().toString());
+                account = 1;
+
+                Transaction transaction = new Transaction(date, price, description, category, account);
+
+                boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
+                if (isInserted)
+                    Toast.makeText(AddTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(AddTransaction.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override

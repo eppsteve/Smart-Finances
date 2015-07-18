@@ -72,7 +72,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/editDescription"
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -83,9 +83,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Amount"
+        android:text="Price"
         android:id="@+id/textView3"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/editDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp" />
@@ -95,12 +95,12 @@
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/editPrice"
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editText"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_alignRight="@+id/editDescription"
+        android:layout_alignEnd="@+id/editDescription" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Category"
         android:id="@+id/textView"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/editPrice"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp" />
@@ -116,12 +116,12 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText3"
+        android:id="@+id/editCategory"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_alignEnd="@+id/editText2" />
+        android:layout_alignRight="@+id/editPrice"
+        android:layout_alignEnd="@+id/editPrice" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Date"
         android:id="@+id/textView4"
-        android:layout_below="@+id/editText3"
+        android:layout_below="@+id/editCategory"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="25dp" />
@@ -137,21 +137,21 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="date"
+        android:inputType="text"
         android:ems="10"
-        android:id="@+id/editText4"
+        android:id="@+id/editDate"
         android:layout_below="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editText3"
-        android:layout_alignEnd="@+id/editText3" />
+        android:layout_alignRight="@+id/editCategory"
+        android:layout_alignEnd="@+id/editCategory" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="OK"
-        android:id="@+id/button"
-        android:layout_below="@+id/editText4"
+        android:id="@+id/btnOK"
+        android:layout_below="@+id/editDate"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -160,7 +160,7 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/btnCancel"
-        android:layout_below="@+id/editText4"
+        android:layout_below="@+id/editDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 </RelativeLayout>
