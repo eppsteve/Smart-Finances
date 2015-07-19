@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances;
+package com.stevesoft.smartfinances.ui;
 
 
 import android.os.Bundle;
@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.stevesoft.smartfinances.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ReportsFragment extends Fragment {
+public class DashboardFragment extends Fragment {
 
 
-    public ReportsFragment() {
+    public DashboardFragment() {
         // Required empty public constructor
     }
 
@@ -23,7 +25,7 @@ public class ReportsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reports, container, false);
+        return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
 

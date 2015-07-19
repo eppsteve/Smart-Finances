@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances;
+package com.stevesoft.smartfinances.ui;
 
 
 import android.database.Cursor;
@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.stevesoft.smartfinances.R;
+import com.stevesoft.smartfinances.TransactionsCursorAdapter;
 
 
 /**
@@ -42,6 +45,6 @@ public class TransactionsFragment extends Fragment {
         super.onResume();
 
         // Switch to new cursor and update contents of ListView
-
+        transactionsAdapter.changeCursor((Cursor) MainActivity.myDb.getAllTransactions());
     }
 }

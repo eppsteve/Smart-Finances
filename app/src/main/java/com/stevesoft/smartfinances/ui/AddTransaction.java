@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances;
+package com.stevesoft.smartfinances.ui;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.stevesoft.smartfinances.R;
 import com.stevesoft.smartfinances.model.Transaction;
 
 
