@@ -60,10 +60,14 @@ public class AddTransaction extends ActionBarActivity {
                 Transaction transaction = new Transaction(date, price, description, category, account);
 
                 boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
-                if (isInserted)
+                if (isInserted) {
                     Toast.makeText(AddTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
-                else
+                    finish();
+                }
+                else {
                     Toast.makeText(AddTransaction.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
             }
         });
 
