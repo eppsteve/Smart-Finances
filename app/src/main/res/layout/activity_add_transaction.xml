@@ -28,33 +28,33 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Expense"
-            android:id="@+id/radioButton"
+            android:id="@+id/rbExpense"
             android:layout_alignParentTop="true"
 
             android:layout_toEndOf="@+id/textViewType"
             android:layout_toRightOf="@+id/textViewType"
             android:layout_marginLeft="24dp"
             android:layout_marginStart="24dp"
-            android:checked="false" />
+            android:checked="true" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Income"
-            android:id="@+id/radioButton2"
+            android:id="@+id/rbIncome"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/radioButton"
-            android:layout_toEndOf="@+id/radioButton"
+            android:layout_toRightOf="@+id/rbExpense"
+            android:layout_toEndOf="@+id/rbExpense"
             android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Transfer"
-            android:id="@+id/radioButton3"
+            android:id="@+id/rbTransfer"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/radioButton2"
-            android:layout_toEndOf="@+id/radioButton2"
+            android:layout_toRightOf="@+id/rbIncome"
+            android:layout_toEndOf="@+id/rbIncome"
             android:checked="false" />
     </RadioGroup>
 
@@ -120,8 +120,8 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editPrice"
-        android:layout_alignEnd="@+id/editPrice" />
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
         android:layout_marginTop="25dp" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:ems="10"
@@ -143,8 +143,8 @@
         android:layout_below="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/editCategory"
-        android:layout_alignEnd="@+id/editCategory" />
+        android:layout_toLeftOf="@+id/btnPickDate"
+        android:layout_toStartOf="@+id/btnPickDate" />
 
     <Button
         android:layout_width="wrap_content"
@@ -163,4 +163,24 @@
         android:layout_below="@+id/editDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Date"
+        android:id="@+id/btnPickDate"
+        android:layout_below="@+id/textView4"
+        android:layout_alignRight="@+id/btnOK"
+        android:layout_alignEnd="@+id/btnOK" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignTop="@+id/editCategory"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/btnCancel"
+        android:layout_toEndOf="@+id/btnCancel" />
 </RelativeLayout>

@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.stevesoft.smartfinances.model.Transaction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by steve on 7/18/15.
  */
@@ -48,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertTransaction(Transaction transaction){
+    public boolean insertExpense(Transaction transaction){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("DATE", transaction.getDate());
@@ -60,6 +63,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Update account's amount
         String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT - "+transaction.getPrice()+" WHERE _id = (SELECT ACCOUNT_ID FROM TRANSACTIONS ORDER BY _id DESC LIMIT 1)";
+        db.execSQL(query);
+
+        if (result==-1)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean insertIncome(Transaction transaction){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("DATE", transaction.getDate());
+        contentValues.put("PRICE", transaction.getPrice());
+        contentValues.put("DESCRIPTION", transaction.getDescription());
+        contentValues.put("CATEGORY_ID", transaction.getCategory_id());
+        contentValues.put("ACCOUNT_ID", transaction.getAccount_id());
+
+        long result = db.insert("TRANSACTIONS", null, contentValues);
+
+        // Update account's amount
+        String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = (SELECT ACCOUNT_ID FROM TRANSACTIONS ORDER BY _id DESC LIMIT 1)";
         db.execSQL(query);
 
         if (result==-1)
@@ -85,6 +109,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         // Query for items from the database and get a cursor back
         Cursor cursor = db.rawQuery("SELECT * FROM ACCOUNT", null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        return cursor;
+    }
+
+    public Cursor getAllCategories(){
+        // Get access to the underlying writeable database
+        SQLiteDatabase db = this.getWritableDatabase();
+        // Query for items from the database and get a cursor back
+        Cursor cursor = db.rawQuery("SELECT * FROM CATEGORY", null);
         if (cursor != null)
             cursor.moveToFirst();
         return cursor;
