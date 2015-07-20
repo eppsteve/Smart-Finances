@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertExpense(Transaction transaction){
+    public boolean insertTransaction(Transaction transaction){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("DATE", transaction.getDate());
@@ -59,27 +59,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("DESCRIPTION", transaction.getDescription());
         contentValues.put("CATEGORY_ID", transaction.getCategory_id());
         contentValues.put("ACCOUNT_ID", transaction.getAccount_id());
-        long result = db.insert("TRANSACTIONS", null, contentValues);
-
-        // Update account's amount
-        String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT - "+transaction.getPrice()+" WHERE _id = (SELECT ACCOUNT_ID FROM TRANSACTIONS ORDER BY _id DESC LIMIT 1)";
-        db.execSQL(query);
-
-        if (result==-1)
-            return false;
-        else
-            return true;
-    }
-
-    public boolean insertIncome(Transaction transaction){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("DATE", transaction.getDate());
-        contentValues.put("PRICE", transaction.getPrice());
-        contentValues.put("DESCRIPTION", transaction.getDescription());
-        contentValues.put("CATEGORY_ID", transaction.getCategory_id());
-        contentValues.put("ACCOUNT_ID", transaction.getAccount_id());
-
         long result = db.insert("TRANSACTIONS", null, contentValues);
 
         // Update account's amount
@@ -92,13 +71,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
+
     public Cursor getAllTransactions(){
 
         // Get access to the underlying writeable database
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Query for items from the database and get a cursor back
-        Cursor cursor = db.rawQuery("SELECT _id, DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID FROM TRANSACTIONS", null);
+        Cursor cursor = db.rawQuery("SELECT " +
+                "TRANSACTIONS._id, TRANSACTIONS.DATE, TRANSACTIONS.PRICE, TRANSACTIONS.DESCRIPTION, CATEGORY.NAME AS CATEGORY_NAME, TRANSACTIONS.ACCOUNT_ID " +
+                "FROM TRANSACTIONS " +
+                "INNER JOIN CATEGORY ON CATEGORY._ID = TRANSACTIONS.CATEGORY_ID", null);
         if (cursor != null)
             cursor.moveToFirst();
         return cursor;

@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -22,7 +21,6 @@ import com.stevesoft.smartfinances.R;
 import com.stevesoft.smartfinances.model.Transaction;
 
 import java.util.Calendar;
-import java.util.List;
 
 
 public class AddTransaction extends ActionBarActivity {
@@ -134,9 +132,10 @@ public class AddTransaction extends ActionBarActivity {
                 account = 1;
 
                 if (rbExpense.isChecked()) {
+                    price = 0 - price;
                     Transaction transaction = new Transaction(date, price, description, category, account);
 
-                    boolean isInserted = MainActivity.myDb.insertExpense(transaction);
+                    boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
                     if (isInserted) {
                         Toast.makeText(AddTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
                         finish();
@@ -146,7 +145,7 @@ public class AddTransaction extends ActionBarActivity {
                     }
                 } else if (rbIncome.isChecked()){
                     Transaction transaction = new Transaction(date, price, description, category, account);
-                    boolean isInserted = MainActivity.myDb.insertIncome(transaction);
+                    boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
                     if (isInserted) {
                         Toast.makeText(AddTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
                         finish();

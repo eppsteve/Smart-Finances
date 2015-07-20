@@ -2,6 +2,7 @@ package com.stevesoft.smartfinances;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,13 +40,19 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         double price = cursor.getDouble(cursor.getColumnIndexOrThrow("PRICE"));
         String description = cursor.getString(cursor.getColumnIndexOrThrow("DESCRIPTION"));
 
-        int category_id = cursor.getInt(cursor.getColumnIndexOrThrow("CATEGORY_ID"));
+        String category_name = cursor.getString(cursor.getColumnIndexOrThrow("CATEGORY_NAME"));
         int account_id = cursor.getInt(cursor.getColumnIndexOrThrow("ACCOUNT_ID"));
 
         // Populate fields with extracted properties
         txtDescription.setText(description);
-        txtCategory.setText(""+category_id);
+        txtCategory.setText(category_name);
         txtPrice.setText(""+price);
         txtDate.setText(date);
+
+        if (price > 0)
+            txtPrice.setTextColor(Color.GREEN);
+        else {
+            txtPrice.setTextColor(Color.RED);
+        }
     }
 }
