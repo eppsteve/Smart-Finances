@@ -26,11 +26,14 @@ public class AccountsCursorAdapter extends CursorAdapter {
     public void bindView(View view, Context context, Cursor cursor) {
         TextView txtAcountName = (TextView) view.findViewById(R.id.textViewAcountName);
         TextView txtAmount = (TextView) view.findViewById(R.id.textViewAmount);
+        TextView txtCurrency = (TextView) view.findViewById(R.id.textViewCurrency);
 
         String name = cursor.getString(cursor.getColumnIndexOrThrow("NAME"));
         double amount = cursor.getDouble(cursor.getColumnIndexOrThrow("AMOUNT"));
+        String currency = cursor.getString(cursor.getColumnIndexOrThrow("CURRENCY"));
 
         txtAcountName.setText(name);
         txtAmount.setText(""+amount);
+        txtCurrency.setText(currency);
     }
 }

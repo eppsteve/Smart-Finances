@@ -51,6 +51,7 @@ public class NewTransaction extends ActionBarActivity {
         _day = cal.get(Calendar.DAY_OF_MONTH);
 
         setUpGUI();
+        setTitle("New Transaction");
     }
 
     private void setUpGUI(){

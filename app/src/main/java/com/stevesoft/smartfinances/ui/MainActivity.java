@@ -105,6 +105,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         else if (id == R.id.action_add){
             Intent intent = new Intent(this, NewTransaction.class);
             startActivity(intent);
+        } else if (id == R.id.new_account){
+            startActivity(new Intent(this, NewAccount.class));
         }
 
         return super.onOptionsItemSelected(item);

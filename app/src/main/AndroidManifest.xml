@@ -20,6 +20,10 @@
             android:name=".ui.NewTransaction"
             android:label="@string/title_activity_new_transaction" >
         </activity>
+        <activity
+            android:name=".ui.NewAccount"
+            android:label="@string/title_activity_new_account" >
+        </activity>
     </application>
 
 </manifest>

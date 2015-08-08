@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.stevesoft.smartfinances.model.Account;
 import com.stevesoft.smartfinances.model.Transaction;
 
 import java.util.ArrayList;
@@ -64,6 +65,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Update account's amount
         String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = (SELECT ACCOUNT_ID FROM TRANSACTIONS ORDER BY _id DESC LIMIT 1)";
         db.execSQL(query);
+
+        if (result==-1)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean insertAccount(Account account){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NAME", account.getName());
+        contentValues.put("AMOUNT", account.getAmount());
+        contentValues.put("CURRENCY", account.getCurrency());
+        long result = db.insert("ACCOUNT", null, contentValues);
 
         if (result==-1)
             return false;

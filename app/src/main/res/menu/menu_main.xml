@@ -12,4 +12,10 @@
         android:title="@string/action_add"
         app:showAsAction="always" />
 
+    <item android:id="@+id/new_account"
+        android:icon="@drawable/ic_new_account"
+        android:title="Add New Account"
+        app:showAsAction="never" />
+
+
 </menu>

@@ -15,4 +15,5 @@
     <string name="title_activity_add_transaction">Add Transaction</string>
     <string name="action_add">Add Transaction</string>
     <string name="title_activity_new_transaction">NewTransaction</string>
+    <string name="title_activity_new_account">NewAccount</string>
 </resources>
