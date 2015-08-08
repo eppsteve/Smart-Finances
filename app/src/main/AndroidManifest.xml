@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.AddTransaction"
-            android:label="@string/title_activity_add_transaction" >
+            android:name=".ui.NewTransaction"
+            android:label="@string/title_activity_new_transaction" >
         </activity>
     </application>
 
