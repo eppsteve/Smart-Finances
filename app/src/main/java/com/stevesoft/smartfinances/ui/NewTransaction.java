@@ -21,7 +21,11 @@ import android.widget.Toast;
 import com.stevesoft.smartfinances.R;
 import com.stevesoft.smartfinances.model.Transaction;
 
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class NewTransaction extends ActionBarActivity {
 
@@ -175,7 +179,8 @@ public class NewTransaction extends ActionBarActivity {
             _month = monthOfYear +1;
             _day = dayOfMonth;
 
-            txtDate.setText(_day +"/"+ _month +"/"+ _year);
+            //txtDate.setText(_day +"/"+ _month +"/"+ _year);
+            txtDate.setText(_year +"-"+ _month +"-"+ _day);
         }
     };
 
@@ -203,6 +208,11 @@ public class NewTransaction extends ActionBarActivity {
 
     private void insertTransaction(){
         String tr_date = txtDate.getText().toString();
+
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+//        Date date = new Date(tr_date);
+//        String myDate = dateFormat.format(date);
+
         String tr_description = txtDescription.getText().toString();
         double tr_price = Double.parseDouble(txtPrice.getText().toString());
         //category = Integer.parseInt(txtCategory.getText().toString());

@@ -38,10 +38,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TRANSACTION_TABLE);
 
         // insert sample date
-        db.execSQL("INSERT INTO ACCOUNT (NAME, AMOUNT, CURRENCY) VALUES ('My Account', 0, 'Euro')");
+        db.execSQL("INSERT INTO ACCOUNT (NAME, AMOUNT, CURRENCY) VALUES ('My Account', 5000, 'EUR')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Food')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Transport')");
-        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('Today', 20, 'Super Market', 1, 1)");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Clothing')");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Entertainment')");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Household')");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Bills')");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Healthcare')");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Other Expenses')");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Income')");
+        db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Transfer')");
+        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', 24, 'Super Market', 1, 1)");
+        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', 48, 'Weekend', 2, 1)");
+        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', 5.40, 'coffee', 4, 1)");
     }
 
     @Override
@@ -102,6 +112,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getNetWorth(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT CURRENCY, SUM(AMOUNT) FROM ACCOUNT GROUP BY CURRENCY";
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        return cursor;
+    }
+
     public Cursor getAllAccounts(){
         // Get access to the underlying writeable database
         SQLiteDatabase db = this.getWritableDatabase();
@@ -117,6 +136,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         // Query for items from the database and get a cursor back
         Cursor cursor = db.rawQuery("SELECT * FROM CATEGORY", null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        return cursor;
+    }
+
+    // gets all the expenses of the current month
+    public Cursor getThisMonthExpenses(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT TRANSACTIONS.DATE, SUM(PRICE) AS PRICE, CATEGORY.NAME AS CATEGORY\n" +
+                "FROM TRANSACTIONS " +
+                "JOIN CATEGORY ON TRANSACTIONS.CATEGORY_id = CATEGORY._id " +
+                "WHERE DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day') " +
+                "GROUP BY CATEGORY.NAME", null);
         if (cursor != null)
             cursor.moveToFirst();
         return cursor;
