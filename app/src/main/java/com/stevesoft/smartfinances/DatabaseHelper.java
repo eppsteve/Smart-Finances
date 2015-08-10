@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.stevesoft.smartfinances.model.Account;
 import com.stevesoft.smartfinances.model.Transaction;
@@ -49,9 +50,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Other Expenses')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Income')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Transfer')");
-        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', 24, 'Super Market', 1, 1)");
-        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', 48, 'Weekend', 2, 1)");
-        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', 5.40, 'coffee', 4, 1)");
+        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -24, 'Super Market', 1, 1)");
+//        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -48, 'Weekend', 2, 1)");
+//        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -5.40, 'coffee', 4, 1)");
     }
 
     @Override
@@ -71,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("CATEGORY_ID", transaction.getCategory_id());
         contentValues.put("ACCOUNT_ID", transaction.getAccount_id());
         long result = db.insert("TRANSACTIONS", null, contentValues);
+        //db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('"+transaction.getDate() +"', "+transaction.getPrice()+", '"+transaction.getDescription()+"', "+transaction.getCategory_id()+", "+transaction.getAccount_id()+")");
 
         // Update account's amount
         String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = (SELECT ACCOUNT_ID FROM TRANSACTIONS ORDER BY _id DESC LIMIT 1)";
@@ -114,7 +116,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getNetWorth(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT CURRENCY, SUM(AMOUNT) FROM ACCOUNT GROUP BY CURRENCY";
+        String query = "SELECT CURRENCY, SUM(AMOUNT) AS BALANCE FROM ACCOUNT GROUP BY CURRENCY";
         Cursor cursor = db.rawQuery(query, null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -141,9 +143,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    // gets all the expenses of the current month
+    // gets all the expenses of the current month BY CATEGORY
     public Cursor getThisMonthExpenses(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT TRANSACTIONS.DATE, SUM(PRICE) AS PRICE, CATEGORY.NAME AS CATEGORY\n" +
                 "FROM TRANSACTIONS " +
                 "JOIN CATEGORY ON TRANSACTIONS.CATEGORY_id = CATEGORY._id " +
@@ -152,5 +154,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         return cursor;
+    }
+
+    // returns the balance of the current month
+    public double getThisMonthBalance() {
+        double balance = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(PRICE) AS BALANCE, DATE " +
+                "FROM TRANSACTIONS " +
+                "WHERE DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')", null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            balance = cursor.getFloat(0);
+            Log.e("BALANCE", balance+"");
+        }
+        return balance;
     }
 }

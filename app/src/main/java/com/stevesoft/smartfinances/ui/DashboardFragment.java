@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
@@ -23,7 +24,9 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.PercentFormatter;
 import com.stevesoft.smartfinances.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -31,14 +34,13 @@ import java.util.ArrayList;
  */
 public class DashboardFragment extends Fragment {
 
-    private PieChart mChart;
-    private Float[] yData; // = {20, 50};
-    private String[] xData; // = {"Sony", "Hawai", "LG", "Apple", "Samsung"};
+    private PieChart mChart;    // chart for showing expenses of current month
+    private Float[] yData;      // used for values of each category
+    private String[] xData;     // used for category names
 
     public DashboardFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,26 +49,60 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        TextView txtNetWorth = (TextView) view.findViewById(R.id.textViewNetWorth);
+        TextView txtThisMonth = (TextView) view.findViewById(R.id.textViewThisMonth);
+        TextView txtThisMonthBalance = (TextView) view.findViewById(R.id.textViewThisMonthBalance);
         mChart = (PieChart) view.findViewById(R.id.chart);
+
+        // Get current month
+        Calendar cal= Calendar.getInstance();
+        SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+        String month_name = month_date.format(cal.getTime());
+        txtThisMonth.setText(month_name);   // set month name
+        txtThisMonthBalance.setText(MainActivity.myDb.getThisMonthBalance() +""); // set month balance
+
+        // display net worth to textview
+        Cursor cur = MainActivity.myDb.getNetWorth();
+        if (cur.moveToFirst()){
+            do {
+                txtNetWorth.setText(txtNetWorth.getText() +""+
+                        cur.getDouble(cur.getColumnIndex("BALANCE")) +" "
+                        + cur.getString(cur.getColumnIndex("CURRENCY"))
+                        + "\n");
+            } while (cur.moveToNext());
+        }
 
         // get current month expenses by category from db
         ArrayList<String> categories = new ArrayList<String>();
         ArrayList<Float> amount = new ArrayList<Float>();
         Cursor c = MainActivity.myDb.getThisMonthExpenses();
-        c.moveToFirst();
-        while (!c.isAfterLast()){
-            // add cursor data to arraylists
-            categories.add(c.getString(c.getColumnIndex("CATEGORY")));
-            amount.add(c.getFloat(c.getColumnIndex("PRICE")));
-            c.moveToNext();
+
+        if (c.moveToFirst()){
+            do{
+                categories.add(c.getString(c.getColumnIndex("CATEGORY")));
+                Log.e("CATEGORY_added:", c.getString(c.getColumnIndex("CATEGORY")));
+                amount.add(c.getFloat(c.getColumnIndex("PRICE")));
+                Log.e("PRICE_added:", "" + c.getFloat(c.getColumnIndex("PRICE")));
+            } while (c.moveToNext());
         }
+
+
+//        c.moveToFirst();
+
+//        while (!c.isAfterLast()){
+//            // add cursor data to arraylists
+//            categories.add(c.getString(c.getColumnIndex("CATEGORY")));
+//            //Log.e("CATEGORY_added:", c.getString(c.getColumnIndex("CATEGORY")));
+//            amount.add(c.getFloat(c.getColumnIndex("PRICE")));
+//            //Log.e("PRICE_added:", ""+c.getFloat(c.getColumnIndex("PRICE")));
+//            c.moveToNext();
+//        }
 
         //convert arraylists to arrays
         xData = categories.toArray(new String[categories.size()]);
         yData = amount.toArray(new Float[amount.size()]);
 
         setUpGraph();
-
 
         return view;
     }
@@ -129,7 +165,7 @@ public class DashboardFragment extends Fragment {
             xVals.add(xData[i]);
 
         // create pie data set
-        PieDataSet dataset = new PieDataSet(yVals1, "Market Share");
+        PieDataSet dataset = new PieDataSet(yVals1, "Expenses");
         dataset.setSliceSpace(3);
         dataset.setSelectionShift(5);
 

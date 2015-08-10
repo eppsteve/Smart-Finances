@@ -25,31 +25,31 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="+12.520,24"
-            android:id="@+id/textView2"
-            android:layout_below="@+id/textView"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=" "
+            android:id="@+id/textViewNetWorth"
+            android:layout_alignTop="@+id/textView"
             android:layout_centerHorizontal="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+
             android:text="Income this month"
-            android:id="@+id/textView3"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="10dp" />
+            android:id="@+id/textViewThisMonth"
+            android:layout_below="@+id/textViewNetWorth"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="+940,00"
-            android:id="@+id/textView4"
-            android:layout_below="@+id/textView3"
+            android:id="@+id/textViewThisMonthBalance"
+            android:layout_below="@+id/textViewThisMonth"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -58,9 +58,8 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Expense this month"
             android:id="@+id/textView5"
-            android:layout_below="@+id/textView4"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textViewThisMonthBalance"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp" />
 

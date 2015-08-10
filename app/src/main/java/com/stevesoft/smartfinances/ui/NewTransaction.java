@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -179,8 +180,8 @@ public class NewTransaction extends ActionBarActivity {
             _month = monthOfYear +1;
             _day = dayOfMonth;
 
-            //txtDate.setText(_day +"/"+ _month +"/"+ _year);
-            txtDate.setText(_year +"-"+ _month +"-"+ _day);
+            // format month and day integers with leading zero digits
+            txtDate.setText(_year +"-"+ String.format("%02d", _month) +"-"+ String.format("%02d", _day));
         }
     };
 
@@ -208,10 +209,6 @@ public class NewTransaction extends ActionBarActivity {
 
     private void insertTransaction(){
         String tr_date = txtDate.getText().toString();
-
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-//        Date date = new Date(tr_date);
-//        String myDate = dateFormat.format(date);
 
         String tr_description = txtDescription.getText().toString();
         double tr_price = Double.parseDouble(txtPrice.getText().toString());
