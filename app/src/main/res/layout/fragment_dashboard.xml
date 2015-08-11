@@ -39,9 +39,9 @@
             android:id="@+id/textViewThisMonth"
             android:layout_below="@+id/textViewNetWorth"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,33 +52,18 @@
             android:layout_below="@+id/textViewThisMonth"
             android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Expense this month"
-            android:id="@+id/textView5"
-            android:layout_below="@+id/textViewThisMonthBalance"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="10dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="-725,30"
-            android:id="@+id/textView6"
-            android:layout_below="@+id/textView5"
-            android:layout_centerHorizontal="true" />
-
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="31dp"
-            android:layout_below="@+id/textView6"
+            android:layout_height="350dp"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true">
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/chart"
@@ -86,7 +71,7 @@
                 android:layout_height="match_parent"/>
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </RelativeLayout>
 </FrameLayout>

@@ -3,18 +3,26 @@ package com.stevesoft.smartfinances.ui;
 
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -32,11 +40,14 @@ import java.util.Calendar;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements OnChartValueSelectedListener{
 
-    private PieChart mChart;    // chart for showing expenses of current month
+    private PieChart mChart;    // chart for showing expenses of current month by category
     private Float[] yData;      // used for values of each category
     private String[] xData;     // used for category names
+
+    protected HorizontalBarChart mBarChart;     // chart for showing income/expenses
+    //private SeekBar mSeekBarX, mSeekBarY;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -53,8 +64,9 @@ public class DashboardFragment extends Fragment {
         TextView txtThisMonth = (TextView) view.findViewById(R.id.textViewThisMonth);
         TextView txtThisMonthBalance = (TextView) view.findViewById(R.id.textViewThisMonthBalance);
         mChart = (PieChart) view.findViewById(R.id.chart);
+        mBarChart = (HorizontalBarChart) view.findViewById(R.id.barChart);
 
-        // Get current month
+        // Get current month balance
         Calendar cal= Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
         String month_name = month_date.format(cal.getTime());
@@ -80,9 +92,7 @@ public class DashboardFragment extends Fragment {
         if (c.moveToFirst()){
             do{
                 categories.add(c.getString(c.getColumnIndex("CATEGORY")));
-                Log.e("CATEGORY_added:", c.getString(c.getColumnIndex("CATEGORY")));
                 amount.add(c.getFloat(c.getColumnIndex("PRICE")));
-                Log.e("PRICE_added:", "" + c.getFloat(c.getColumnIndex("PRICE")));
             } while (c.moveToNext());
         }
 
@@ -102,12 +112,12 @@ public class DashboardFragment extends Fragment {
         xData = categories.toArray(new String[categories.size()]);
         yData = amount.toArray(new Float[amount.size()]);
 
-        setUpGraph();
-
+        setUpPieGraph();
+        setUpBarGraph();
         return view;
     }
 
-    private void setUpGraph(){
+    private void setUpPieGraph(){
         mChart.setUsePercentValues(true);
         mChart.setDescription("");
         mChart.setDrawHoleEnabled(true);
@@ -150,7 +160,7 @@ public class DashboardFragment extends Fragment {
         });
     }
 
-
+    // adds data to Pie Chart
     private void addData(){
         ArrayList<Entry> yVals1 = new ArrayList<Entry>();
 
@@ -184,7 +194,7 @@ public class DashboardFragment extends Fragment {
         for (int c: ColorTemplate.LIBERTY_COLORS)
             colors.add(c);
 
-        for (int c: ColorTemplate.PASTEL_COLORS)
+        for (int c : ColorTemplate.PASTEL_COLORS)
             colors.add(c);
 
         colors.add(ColorTemplate.getHoloBlue());
@@ -203,5 +213,108 @@ public class DashboardFragment extends Fragment {
         mChart.invalidate();
     }
 
+    private void setUpBarGraph(){
+        //mBarChart.setOnChartValueSelectedListener(this);
+        // mChart.setHighlightEnabled(false);
 
+        mBarChart.setDrawBarShadow(false);
+
+        mBarChart.setDrawValueAboveBar(false);
+
+        mBarChart.setDescription("");
+
+        // if more than 2 entries are displayed in the chart, no values will be
+        // drawn
+        mBarChart.setMaxVisibleValueCount(2);
+
+        // scaling can now only be done on x- and y-axis separately
+        mBarChart.setPinchZoom(false);
+
+        // draw shadows for each bar that show the maximum value
+        // mBarChart.setDrawBarShadow(true);
+
+         //mBarChart.setDrawXLabels(false);
+
+        mBarChart.setDrawGridBackground(false);
+
+        // mBarChart.setDrawYLabels(false);
+
+        //tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+
+        XAxis xl = mBarChart.getXAxis();
+        xl.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //xl.setTypeface(tf);
+        xl.setDrawAxisLine(false);
+        xl.setDrawGridLines(false);
+        xl.setGridLineWidth(0.3f);
+
+        YAxis yl = mBarChart.getAxisLeft();
+        //yl.setTypeface(tf);
+        yl.setDrawAxisLine(false);
+        yl.setDrawGridLines(false);
+        //yl.setDrawTopYLabelEntry(false);
+        yl.setGridLineWidth(0.3f);
+
+//        yl.setInverted(true);
+
+        YAxis yr = mBarChart.getAxisRight();
+        //yr.setTypeface(tf);
+        yr.setDrawAxisLine(false);
+        yr.setDrawTopYLabelEntry(false);
+        yr.setDrawGridLines(false);
+//        yr.setInverted(true);
+
+        setBarChartData(2, 50);
+        mBarChart.animateY(2500);
+
+        // setting data
+//        mSeekBarY.setProgress(50);
+//        mSeekBarX.setProgress(12);
+
+       // mSeekBarY.setOnSeekBarChangeListener(this);
+       // mSeekBarX.setOnSeekBarChangeListener(this);
+
+//        Legend l = mBarChart.getLegend();
+//        l.setEnabled(false);
+        mBarChart.getLegend().setEnabled(false);
+    }
+
+    private void setBarChartData(int count, float range){
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        ArrayList<String> xVals = new ArrayList<String>();
+
+//        for (int i = 0; i < count; i++) {
+//            xVals.add(mMonths[i % 12]);
+//            yVals1.add(new BarEntry((float) (Math.random() * range), i));
+//        }
+
+        xVals.add(0, "Income");
+        xVals.add(1, "Expenses");
+        yVals1.add(new BarEntry(MainActivity.myDb.getThisMonthIncome(), 0));
+        yVals1.add(new BarEntry(MainActivity.myDb.getThisMonthExpense(), 1));
+
+        BarDataSet set1 = new BarDataSet(yVals1, "");
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        dataSets.add(set1);
+
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueTextSize(10f);
+        //data.setValueTypeface(tf);
+
+        int[] colors = {getResources().getColor(R.color.green), getResources().getColor(R.color.red)};
+        set1.setColors(colors);
+        mBarChart.setData(data);
+
+    }
+
+    @Override
+    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
 }

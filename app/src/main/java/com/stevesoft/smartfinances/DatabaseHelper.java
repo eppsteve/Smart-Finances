@@ -166,8 +166,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
             balance = cursor.getFloat(0);
-            Log.e("BALANCE", balance+"");
         }
         return balance;
+    }
+
+    public float getThisMonthIncome(){
+        float income = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(PRICE) AS BALANCE " +
+                "FROM TRANSACTIONS  " +
+                "WHERE (DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')) " +
+                "    AND PRICE > 0", null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            income = cursor.getFloat(0);
+        }
+        return income;
+    }
+
+    // returns the sum of expenses for the current month
+    public float getThisMonthExpense(){
+        float expense = 0;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(PRICE) AS BALANCE " +
+                "FROM TRANSACTIONS  " +
+                "WHERE (DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')) " +
+                "    AND PRICE < 0", null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            expense = cursor.getFloat(0) * (-1);
+        }
+        return expense;
     }
 }
