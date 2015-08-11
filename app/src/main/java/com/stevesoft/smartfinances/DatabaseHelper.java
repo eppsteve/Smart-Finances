@@ -5,13 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.stevesoft.smartfinances.model.Account;
 import com.stevesoft.smartfinances.model.Transaction;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by steve on 7/18/15.
@@ -24,7 +20,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String CREATE_ACCOUNT_TABLE = "CREATE TABLE ACCOUNT (_id INTEGER PRIMARY KEY, NAME TEXT, AMOUNT REAL, CURRENCY TEXT)";
     public static final String CREATE_CATEGORY_TABLE = "CREATE TABLE CATEGORY (_id INTEGER PRIMARY KEY, NAME TEXT)";
     public static final String CREATE_TRANSACTION_TABLE = "CREATE TABLE TRANSACTIONS (_id INTEGER PRIMARY KEY, DATE TEXT, PRICE REAL, DESCRIPTION TEXT, " +
-            "CATEGORY_ID INTEGER, ACCOUNT_ID INTEGER, FOREIGN KEY (CATEGORY_ID) REFERENCES CATEGORY(_id), " +
+            "CATEGORY_ID INTEGER, ACCOUNT_ID INTEGER NOT NULL, "+
+            "TYPE STRING CHECK (TYPE IN ('INCOME','EXPENSE', 'TRANSFER') ) NOT NULL DEFAULT ('EXPENSE'), "+
+            "TO_ACCOUNT INT REFERENCES ACCOUNT (_id), "+
+            "FOREIGN KEY (CATEGORY_ID) REFERENCES CATEGORY(_id), " +
             "FOREIGN KEY (ACCOUNT_ID) REFERENCES ACCOUNT(_id) )";
 
     public DatabaseHelper(Context context) {
@@ -50,7 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Other Expenses')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Income')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Transfer')");
-        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -24, 'Super Market', 1, 1)");
+        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID, TYPE) VALUES ('2015-08-01', -24, 'Super Market', 1, 1, 'EXPENSE')");
 //        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -48, 'Weekend', 2, 1)");
 //        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -5.40, 'coffee', 4, 1)");
     }
@@ -71,14 +70,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("DESCRIPTION", transaction.getDescription());
         contentValues.put("CATEGORY_ID", transaction.getCategory_id());
         contentValues.put("ACCOUNT_ID", transaction.getAccount_id());
+        contentValues.put("TYPE", transaction.getType());
+
+        contentValues.put("TO_ACCOUNT", transaction.getDestinationAccount());
+
         long result = db.insert("TRANSACTIONS", null, contentValues);
         //db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('"+transaction.getDate() +"', "+transaction.getPrice()+", '"+transaction.getDescription()+"', "+transaction.getCategory_id()+", "+transaction.getAccount_id()+")");
 
-        // Update account's amount
-        String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = (SELECT ACCOUNT_ID FROM TRANSACTIONS ORDER BY _id DESC LIMIT 1)";
+        // Update account's balance
+        String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = "+ transaction.getAccount_id();
         db.execSQL(query);
 
+
         if (result==-1)
+            return false;
+        else
+            return true;
+    }
+
+
+    public boolean transferFunds(Transaction transaction){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("DATE", transaction.getDate());
+        contentValues.put("PRICE", transaction.getPrice());
+        contentValues.put("DESCRIPTION", transaction.getDescription());
+        contentValues.put("CATEGORY_ID", transaction.getCategory_id());
+        contentValues.put("ACCOUNT_ID", transaction.getAccount_id());
+        contentValues.put("TYPE", transaction.getType());
+        contentValues.put("TO_ACCOUNT", transaction.getDestinationAccount());
+
+        // Execute query
+        long result1 = db.insert("TRANSACTIONS", null, contentValues);
+
+        // Update source account balance (SELECT ACCOUNT_ID FROM TRANSACTIONS ORDER BY _id DESC LIMIT 1)
+        String query1 = "UPDATE ACCOUNT SET AMOUNT = AMOUNT - "+transaction.getPrice()+" WHERE _id = "+ transaction.getAccount_id();
+        db.execSQL(query1);
+
+        // Update destination account balance
+        String query2 = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = "+ transaction.getDestinationAccount();
+        db.execSQL(query2);
+
+        if (result1 ==-1)
             return false;
         else
             return true;
@@ -149,7 +183,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT TRANSACTIONS.DATE, SUM(PRICE) AS PRICE, CATEGORY.NAME AS CATEGORY\n" +
                 "FROM TRANSACTIONS " +
                 "JOIN CATEGORY ON TRANSACTIONS.CATEGORY_id = CATEGORY._id " +
-                "WHERE DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day') " +
+                "WHERE (DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')) " +
+                "AND TRANSACTIONS.TYPE = 'EXPENSE' " +
                 "GROUP BY CATEGORY.NAME", null);
         if (cursor != null)
             cursor.moveToFirst();
@@ -162,7 +197,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(PRICE) AS BALANCE, DATE " +
                 "FROM TRANSACTIONS " +
-                "WHERE DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')", null);
+                "WHERE TRANSACTIONS.TYPE NOT IN ('TRANSFER') AND "+
+                "( DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day') )", null);
         if (cursor != null) {
             cursor.moveToFirst();
             balance = cursor.getFloat(0);
@@ -175,7 +211,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(PRICE) AS BALANCE " +
                 "FROM TRANSACTIONS  " +
-                "WHERE (DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')) " +
+                "WHERE TRANSACTIONS.TYPE = 'INCOME' "+
+                "AND (DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day') ) " +
                 "    AND PRICE > 0", null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -190,7 +227,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(PRICE) AS BALANCE " +
                 "FROM TRANSACTIONS  " +
-                "WHERE (DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')) " +
+                "WHERE TRANSACTIONS.TYPE = 'EXPENSE' AND "+
+                "(DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day') ) " +
                 "    AND PRICE < 0", null);
         if (cursor != null) {
             cursor.moveToFirst();

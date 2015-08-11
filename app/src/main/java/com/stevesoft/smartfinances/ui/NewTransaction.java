@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,10 +22,7 @@ import com.stevesoft.smartfinances.R;
 import com.stevesoft.smartfinances.model.Transaction;
 
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 public class NewTransaction extends ActionBarActivity {
 
@@ -43,7 +39,10 @@ public class NewTransaction extends ActionBarActivity {
     int category_id;
 
     // id of selected account
-    int account_id;
+    int account_id, to_account_id;
+
+    // type of the transaction (income, expense or transfer)
+    String transaction_type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +87,18 @@ public class NewTransaction extends ActionBarActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //int pos = parent.getItemAtPosition(position);
                 category_id = Integer.parseInt("" + id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spToAccount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                to_account_id = Integer.parseInt("" +id);
             }
 
             @Override
@@ -143,6 +154,7 @@ public class NewTransaction extends ActionBarActivity {
                 // hide 'ToAccount' views
                 lblToAccount.setVisibility(View.GONE);
                 spToAccount.setVisibility(View.GONE);
+                spCategory.setSelection(8);
             }
         });
 
@@ -162,6 +174,7 @@ public class NewTransaction extends ActionBarActivity {
                 lblWithdraw.setText("From Account");
                 lblToAccount.setVisibility(View.VISIBLE);
                 spToAccount.setVisibility(View.VISIBLE);
+                spCategory.setSelection(9);
             }
         });
     }
@@ -208,16 +221,20 @@ public class NewTransaction extends ActionBarActivity {
     }
 
     private void insertTransaction(){
+        // get date
         String tr_date = txtDate.getText().toString();
-
+        // get description
         String tr_description = txtDescription.getText().toString();
+        // get price
         double tr_price = Double.parseDouble(txtPrice.getText().toString());
-        //category = Integer.parseInt(txtCategory.getText().toString());
-        //account = Integer.parseInt(txtAccount.getText().toString());
 
         if (rbExpense.isChecked()) {
+
+            // EXPENSE TRANSACTION
+            transaction_type = "EXPENSE";
+
             tr_price = 0 - tr_price;
-            Transaction transaction = new Transaction(tr_date, tr_price, tr_description, category_id, account_id);
+            Transaction transaction = new Transaction(tr_date, tr_price, tr_description, category_id, account_id, transaction_type);
 
             boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
             if (isInserted) {
@@ -228,9 +245,27 @@ public class NewTransaction extends ActionBarActivity {
                 finish();
             }
         } else if (rbIncome.isChecked()){
-            Transaction transaction = new Transaction(tr_date, tr_price, tr_description, category_id, account_id);
+
+            // INCOME TRANSACTION
+            transaction_type = "INCOME";
+
+            Transaction transaction = new Transaction(tr_date, tr_price, tr_description, category_id, account_id, transaction_type);
             boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
             if (isInserted) {
+                Toast.makeText(NewTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(NewTransaction.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        } else if (rbTransfer.isChecked()){
+
+            // TRANSFER TRANSACTION
+            transaction_type = "TRANSFER";
+
+            Transaction transaction = new Transaction(tr_date, tr_price, tr_description, category_id, account_id, transaction_type, to_account_id);
+            boolean isInserted = MainActivity.myDb.transferFunds(transaction);
+            if (isInserted){
                 Toast.makeText(NewTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
                 finish();
             } else {

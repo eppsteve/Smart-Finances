@@ -23,7 +23,8 @@
         android:id="@+id/txtAccountName"
         android:layout_below="@+id/lblName"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -63,7 +64,9 @@
         android:id="@+id/txtInitialBalance"
         android:layout_below="@+id/lblBalance"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true"
+        android:text="0" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"

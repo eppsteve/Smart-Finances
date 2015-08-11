@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/lblType"
         android:layout_toEndOf="@+id/lblType"
-        android:layout_marginLeft="34dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginStart="34dp">
 
         <RadioButton
@@ -154,7 +154,8 @@
         android:id="@+id/txtDescription"
         android:layout_below="@+id/lblDescription"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
