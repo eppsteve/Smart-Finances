@@ -56,6 +56,7 @@ public class NewTransaction extends ActionBarActivity {
 
         setUpGUI();
         setTitle("New Transaction");
+        txtDate.setText(_year +"-"+ String.format("%02d", _month+1) +"-"+ String.format("%02d", _day));
     }
 
     private void setUpGUI(){
@@ -72,6 +73,14 @@ public class NewTransaction extends ActionBarActivity {
         spCategory = (Spinner) findViewById(R.id.spinnerCategory);
         spWithdraw = (Spinner) findViewById(R.id.spinnerWithdraw);
         spToAccount = (Spinner) findViewById(R.id.spinnerToAccount);
+        Button btnDate = (Button) findViewById(R.id.btnDate);
+
+        btnDate.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                showDialog(DIALOG_ID);
+            }
+        });
+
 
         // get all categories from database
         Cursor cursor = MainActivity.myDb.getAllCategories();
@@ -131,12 +140,6 @@ public class NewTransaction extends ActionBarActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();
-            }
-        });
-
-        txtDate.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                showDialog(DIALOG_ID);
             }
         });
 

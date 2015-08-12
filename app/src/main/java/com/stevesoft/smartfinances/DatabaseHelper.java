@@ -148,14 +148,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getNetWorth(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT CURRENCY, SUM(AMOUNT) AS BALANCE FROM ACCOUNT GROUP BY CURRENCY";
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        return cursor;
-    }
 
     public Cursor getAllAccounts(){
         // Get access to the underlying writeable database

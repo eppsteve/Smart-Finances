@@ -69,19 +69,12 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         Calendar cal= Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
         String month_name = month_date.format(cal.getTime());
-        txtThisMonth.setText(txtThisMonth.getText() + month_name);   // set month name
-        txtThisMonthBalance.setText(MainActivity.myDb.getThisMonthBalance() + "EUR"); // set month balance
+        // set month name
+        txtThisMonth.setText(txtThisMonth.getText() + month_name);
+        // round double to 2 decimal places
+        // set month balance
+        txtThisMonthBalance.setText(String.format("%.2f", MainActivity.myDb.getThisMonthBalance()) + "EUR");
 
-        // display net worth to textview
-//        Cursor cur = MainActivity.myDb.getNetWorth();
-//        if (cur.moveToFirst()){
-//            do {
-//                txtNetWorth.setText(txtNetWorth.getText() +""+
-//                        cur.getDouble(cur.getColumnIndex("BALANCE")) +" "
-//                        + cur.getString(cur.getColumnIndex("CURRENCY"))
-//                        + "\n");
-//            } while (cur.moveToNext());
-//        }
 
         // get current month expenses by category from db
         ArrayList<String> categories = new ArrayList<String>();
