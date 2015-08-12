@@ -60,7 +60,6 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        TextView txtNetWorth = (TextView) view.findViewById(R.id.textViewNetWorth);
         TextView txtThisMonth = (TextView) view.findViewById(R.id.textViewThisMonth);
         TextView txtThisMonthBalance = (TextView) view.findViewById(R.id.textViewThisMonthBalance);
         mChart = (PieChart) view.findViewById(R.id.chart);
@@ -70,19 +69,19 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         Calendar cal= Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
         String month_name = month_date.format(cal.getTime());
-        txtThisMonth.setText(month_name);   // set month name
-        txtThisMonthBalance.setText(MainActivity.myDb.getThisMonthBalance() +""); // set month balance
+        txtThisMonth.setText(txtThisMonth.getText() + month_name);   // set month name
+        txtThisMonthBalance.setText(MainActivity.myDb.getThisMonthBalance() + "EUR"); // set month balance
 
         // display net worth to textview
-        Cursor cur = MainActivity.myDb.getNetWorth();
-        if (cur.moveToFirst()){
-            do {
-                txtNetWorth.setText(txtNetWorth.getText() +""+
-                        cur.getDouble(cur.getColumnIndex("BALANCE")) +" "
-                        + cur.getString(cur.getColumnIndex("CURRENCY"))
-                        + "\n");
-            } while (cur.moveToNext());
-        }
+//        Cursor cur = MainActivity.myDb.getNetWorth();
+//        if (cur.moveToFirst()){
+//            do {
+//                txtNetWorth.setText(txtNetWorth.getText() +""+
+//                        cur.getDouble(cur.getColumnIndex("BALANCE")) +" "
+//                        + cur.getString(cur.getColumnIndex("CURRENCY"))
+//                        + "\n");
+//            } while (cur.moveToNext());
+//        }
 
         // get current month expenses by category from db
         ArrayList<String> categories = new ArrayList<String>();
@@ -141,6 +140,9 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
         mChart.animateY(1500, Easing.EasingOption.EaseInOutQuad);
         // mChart.spin(2000, 0, 360);
+
+        Legend l = mChart.getLegend();
+        l.setEnabled(false);
 
         mChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override

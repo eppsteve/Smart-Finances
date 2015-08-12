@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stevesoft.smartfinances.ui.DashboardFragment">
+    tools:context="com.stevesoft.smartfinances.ui.DashboardFragment"
+    android:background="@color/background_material_light">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -10,66 +11,93 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Net Worth"
-            android:id="@+id/textView"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="Net Worth"-->
+            <!--android:id="@+id/textView"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="10dp" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=" "
-            android:id="@+id/textViewNetWorth"
-            android:layout_alignTop="@+id/textView"
-            android:layout_centerHorizontal="true" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--android:text=" "-->
+            <!--android:id="@+id/textViewNetWorth"-->
+            <!--android:layout_alignTop="@+id/textView"-->
+            <!--android:layout_centerHorizontal="true" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:text="Income this month"
-            android:id="@+id/textViewThisMonth"
-            android:layout_below="@+id/textViewNetWorth"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="25sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="+940,00"
-            android:id="@+id/textViewThisMonthBalance"
-            android:layout_below="@+id/textViewThisMonth"
-            android:layout_centerHorizontal="true" />
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/top_layout"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/custom_border"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Overview - "
+                android:id="@+id/textViewThisMonth"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="+940,00"
+                android:id="@+id/textViewThisMonthBalance"
+                android:layout_below="@+id/textViewThisMonth"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/barChart"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="70dp"
+                android:layout_below="@+id/textViewThisMonth"
+                android:layout_marginTop="50dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balance"
+                android:id="@+id/lblBalance"
+                android:layout_below="@+id/textViewThisMonth"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_below="@id/top_layout"
+            android:background="@drawable/custom_border"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Expenses by category"
+                android:id="@+id/textView" />
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
+                android:layout_height="match_parent" />
 
         </LinearLayout>
 
