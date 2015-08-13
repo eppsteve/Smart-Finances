@@ -140,9 +140,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Query for items from the database and get a cursor back
         Cursor cursor = db.rawQuery("SELECT " +
-                "TRANSACTIONS._id, TRANSACTIONS.DATE, TRANSACTIONS.PRICE, TRANSACTIONS.DESCRIPTION, CATEGORY.NAME AS CATEGORY_NAME, TRANSACTIONS.ACCOUNT_ID " +
+                "TRANSACTIONS._id, TRANSACTIONS.DATE, TRANSACTIONS.PRICE, TRANSACTIONS.DESCRIPTION, " +
+                "CATEGORY.NAME AS CATEGORY_NAME, TRANSACTIONS.TYPE, ACCOUNT.NAME AS ACCOUNT_NAME, TRANSACTIONS.TO_ACCOUNT " +
                 "FROM TRANSACTIONS " +
-                "INNER JOIN CATEGORY ON CATEGORY._ID = TRANSACTIONS.CATEGORY_ID", null);
+                "INNER JOIN CATEGORY ON CATEGORY._ID = TRANSACTIONS.CATEGORY_ID " +
+                "INNER JOIN ACCOUNT ON TRANSACTIONS.ACCOUNT_ID = ACCOUNT._id", null);
         if (cursor != null)
             cursor.moveToFirst();
         return cursor;
