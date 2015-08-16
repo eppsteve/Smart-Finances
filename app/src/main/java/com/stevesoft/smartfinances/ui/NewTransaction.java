@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ public class NewTransaction extends ActionBarActivity {
     TextView lblWithdraw, lblToAccount;
     RadioButton rbExpense, rbIncome, rbTransfer;
     Spinner spCategory, spWithdraw, spToAccount;
+    Toolbar toolbar;
 
     // id of selected category
     int category_id;
@@ -48,6 +50,10 @@ public class NewTransaction extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_transaction);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("New Transaction");
+        setSupportActionBar(toolbar);
 
         final Calendar cal = Calendar.getInstance();
         _year = cal.get(Calendar.YEAR);

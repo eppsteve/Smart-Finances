@@ -3,4 +3,13 @@
     <item name="green" type="color">#008000</item>
     <item name="red" type="color">#ce0f0f</item>
     <item name="light_blue" type="color">#9999ff</item>
+
+    <!--<color name="ColorPrimary">#00897B</color>-->
+    <!--<color name="ColorPrimaryDark">#00695C</color>-->
+    <!--<color name="tabsScrollColor">#004D40</color>-->
+
+    <color name="ColorPrimary">#2196F3</color>
+    <color name="ColorPrimaryDark">#1976D2</color>
+    <color name="tabsScrollColor">#FFFFFF</color>
+
 </resources>

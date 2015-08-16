@@ -2,6 +2,7 @@ package com.stevesoft.smartfinances.ui;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +22,10 @@ public class NewAccount extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_account);
 
-        setTitle("New Account");
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("New Account");
+        setSupportActionBar(toolbar);
+
         setUpGUI();
     }
 
