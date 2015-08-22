@@ -52,8 +52,8 @@ public class NewTransaction extends ActionBarActivity {
         setContentView(R.layout.activity_new_transaction);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("New Transaction");
-        setSupportActionBar(toolbar);
+        //toolbar.setTitle("New Transaction");
+        //setSupportActionBar(toolbar);
 
         final Calendar cal = Calendar.getInstance();
         _year = cal.get(Calendar.YEAR);

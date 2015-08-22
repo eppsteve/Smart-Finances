@@ -60,6 +60,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
+        // initialize views
         TextView txtThisMonth = (TextView) view.findViewById(R.id.textViewThisMonth);
         TextView txtThisMonthBalance = (TextView) view.findViewById(R.id.textViewThisMonthBalance);
         mChart = (PieChart) view.findViewById(R.id.chart);
@@ -255,7 +256,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         YAxis yr = mBarChart.getAxisRight();
         //yr.setTypeface(tf);
         yr.setDrawAxisLine(false);
-        yr.setDrawTopYLabelEntry(false);
+        yr.setDrawTopYLabelEntry(true);
         yr.setDrawGridLines(false);
 //        yr.setInverted(true);
 

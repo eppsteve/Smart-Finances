@@ -90,7 +90,7 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         else if (type.equals("EXPENSE"))
             txtPrice.setTextColor(context.getResources().getColor(R.color.red));
         else if (type.equals("TRANSFER")) {
-            txtPrice.setTextColor(context.getResources().getColor(R.color.light_blue));
+            txtPrice.setTextColor(context.getResources().getColor(R.color.black));
             txtToAccount.setVisibility(View.VISIBLE);
             txtToAccount.setText("-> " + to_account);
         }

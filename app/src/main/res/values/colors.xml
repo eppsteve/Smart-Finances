@@ -2,7 +2,7 @@
 <resources>
     <item name="green" type="color">#008000</item>
     <item name="red" type="color">#ce0f0f</item>
-    <item name="light_blue" type="color">#9999ff</item>
+    <item name="black" type="color">#000000</item>
 
     <!--<color name="ColorPrimary">#00897B</color>-->
     <!--<color name="ColorPrimaryDark">#00695C</color>-->

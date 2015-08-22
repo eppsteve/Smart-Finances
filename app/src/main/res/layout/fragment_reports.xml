@@ -3,8 +3,24 @@
     android:layout_height="match_parent"
     tools:context="com.stevesoft.smartfinances.ui.ReportsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="reports" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/custom_border"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Expenses"
+            android:layout_margin="10dp"
+            android:textSize="18sp"/>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/line_chart"/>
+    </LinearLayout>
 
 </FrameLayout>

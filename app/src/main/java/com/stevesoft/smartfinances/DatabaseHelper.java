@@ -230,4 +230,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return expense;
     }
+
+    public Cursor getDailyExpenses(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUBSTR(DATE,9,10) AS DATE, SUM(PRICE*(-1)) AS PRICE " +
+                "FROM TRANSACTIONS " +
+                "WHERE TYPE = 'EXPENSE' AND (DATE BETWEEN date('now', 'start of month') " +
+                "AND date('now','start of month', '+1 months', '-1 day')) " +
+                "GROUP BY DATE "+
+                "ORDER BY DATE ", null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        return cursor;
+    }
 }
