@@ -47,7 +47,9 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
     private String[] xData;     // used for category names
 
     protected HorizontalBarChart mBarChart;     // chart for showing income/expenses
-    //private SeekBar mSeekBarX, mSeekBarY;
+
+    private float thisMonthIncome;
+    private float thisMonthExpenses;
 
     public DashboardFragment() {
         // Required empty public constructor
@@ -63,8 +65,15 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         // initialize views
         TextView txtThisMonth = (TextView) view.findViewById(R.id.textViewThisMonth);
         TextView txtThisMonthBalance = (TextView) view.findViewById(R.id.textViewThisMonthBalance);
+        TextView txtThisMonthIncome = (TextView) view.findViewById(R.id.lbl_income);
+        TextView txtThisMonthExpense = (TextView) view.findViewById(R.id.lbl_expense);
         mChart = (PieChart) view.findViewById(R.id.chart);
         mBarChart = (HorizontalBarChart) view.findViewById(R.id.barChart);
+
+        thisMonthExpenses = MainActivity.myDb.getThisMonthExpense();
+        thisMonthIncome = MainActivity.myDb.getThisMonthIncome();
+        txtThisMonthIncome.setText(thisMonthIncome +" \u20ac");
+        txtThisMonthExpense.setText(thisMonthExpenses +" \u20ac");
 
         // Get current month balance
         Calendar cal= Calendar.getInstance();
@@ -88,18 +97,6 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
                 amount.add(c.getFloat(c.getColumnIndex("PRICE")));
             } while (c.moveToNext());
         }
-
-
-//        c.moveToFirst();
-
-//        while (!c.isAfterLast()){
-//            // add cursor data to arraylists
-//            categories.add(c.getString(c.getColumnIndex("CATEGORY")));
-//            //Log.e("CATEGORY_added:", c.getString(c.getColumnIndex("CATEGORY")));
-//            amount.add(c.getFloat(c.getColumnIndex("PRICE")));
-//            //Log.e("PRICE_added:", ""+c.getFloat(c.getColumnIndex("PRICE")));
-//            c.moveToNext();
-//        }
 
         //convert arraylists to arrays
         xData = categories.toArray(new String[categories.size()]);
@@ -215,7 +212,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
         mBarChart.setDrawBarShadow(false);
 
-        mBarChart.setDrawValueAboveBar(false);
+        mBarChart.setDrawValueAboveBar(true);
 
         mBarChart.setDescription("");
 
@@ -229,11 +226,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         // draw shadows for each bar that show the maximum value
         // mBarChart.setDrawBarShadow(true);
 
-         //mBarChart.setDrawXLabels(false);
-
         mBarChart.setDrawGridBackground(false);
-
-        // mBarChart.setDrawYLabels(false);
 
         //tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
 
@@ -250,6 +243,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         yl.setDrawGridLines(false);
         //yl.setDrawTopYLabelEntry(false);
         yl.setGridLineWidth(0.3f);
+        yl.setEnabled(false);
 
 //        yl.setInverted(true);
 
@@ -259,35 +253,21 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         yr.setDrawTopYLabelEntry(true);
         yr.setDrawGridLines(false);
 //        yr.setInverted(true);
+        yr.setEnabled(false);
 
-        setBarChartData(2, 50);
+        setBarChartData();
         mBarChart.animateY(2500);
-
-        // setting data
-//        mSeekBarY.setProgress(50);
-//        mSeekBarX.setProgress(12);
-
-       // mSeekBarY.setOnSeekBarChangeListener(this);
-       // mSeekBarX.setOnSeekBarChangeListener(this);
-
-//        Legend l = mBarChart.getLegend();
-//        l.setEnabled(false);
         mBarChart.getLegend().setEnabled(false);
     }
 
-    private void setBarChartData(int count, float range){
+    private void setBarChartData(){
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
         ArrayList<String> xVals = new ArrayList<String>();
 
-//        for (int i = 0; i < count; i++) {
-//            xVals.add(mMonths[i % 12]);
-//            yVals1.add(new BarEntry((float) (Math.random() * range), i));
-//        }
-
         xVals.add(0, "Income");
         xVals.add(1, "Expenses");
-        yVals1.add(new BarEntry(MainActivity.myDb.getThisMonthIncome(), 0));
-        yVals1.add(new BarEntry(MainActivity.myDb.getThisMonthExpense(), 1));
+        yVals1.add(new BarEntry(thisMonthIncome, 0));
+        yVals1.add(new BarEntry(thisMonthExpenses, 1));
 
         BarDataSet set1 = new BarDataSet(yVals1, "");
 

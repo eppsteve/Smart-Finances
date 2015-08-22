@@ -71,7 +71,7 @@ public class ReportsFragment extends Fragment {
     private void setUpLineChart(int count){
         // no description text
         mChart.setDescription("");
-        mChart.setNoDataTextDescription("You need to provide data for the chart.");
+        mChart.setNoDataTextDescription("No data for this chart.");
 
         // enable value highlighting
         mChart.setHighlightEnabled(true);
@@ -91,42 +91,20 @@ public class ReportsFragment extends Fragment {
         // set an alternative background color
         // mChart.setBackgroundColor(Color.GRAY);
 
-        // create a custom MarkerView (extend MarkerView) and specify the layout
-        // to use for it
-        //MyMarkerView mv = new MyMarkerView(this, R.layout.custom_marker_view);
-
-        // set the marker to the chart
-        //mChart.setMarkerView(mv);
-
-        // x-axis limit line
-//        LimitLine llXAxis = new LimitLine(10f, "Index 10");
-//        llXAxis.setLineWidth(4f);
-//        llXAxis.enableDashedLine(10f, 10f, 0f);
-//        llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.POS_RIGHT);
-//        llXAxis.setTextSize(10f);
-
         XAxis xAxis = mChart.getXAxis();
-//        xAxis.addLimitLine(llXAxis);
-
-//        LimitLine ll1 = new LimitLine(130f, "Upper Limit");
-//        ll1.setLineWidth(4f);
-//        ll1.enableDashedLine(10f, 10f, 0f);
-//        ll1.setLabelPosition(LimitLine.LimitLabelPosition.POS_RIGHT);
-//        ll1.setTextSize(10f);
-//
-//        LimitLine ll2 = new LimitLine(-30f, "Lower Limit");
-//        ll2.setLineWidth(4f);
-//        ll2.enableDashedLine(10f, 10f, 0f);
-//        ll2.setLabelPosition(LimitLine.LimitLabelPosition.POS_RIGHT);
-//        ll2.setTextSize(10f);
+        xAxis.setDrawGridLines(false);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawAxisLine(true);
 
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-//        leftAxis.addLimitLine(ll1);
-//        leftAxis.addLimitLine(ll2);
-        leftAxis.setAxisMaxValue(220f);
+
+        //leftAxis.setAxisMaxValue(220f);
         leftAxis.setAxisMinValue(0);
         leftAxis.setStartAtZero(false);
+        leftAxis.setShowOnlyMinMax(true);
+        leftAxis.setDrawAxisLine(false);
+        leftAxis.setEnabled(false);
         //leftAxis.setYOffset(20f);
         //leftAxis.enableGridDashedLine(10f, 10f, 0f);
 
@@ -136,7 +114,7 @@ public class ReportsFragment extends Fragment {
         mChart.getAxisRight().setEnabled(false);
 
         // add data
-        setData(count, 100);
+        setData(count);
 
 //        mChart.setVisibleXRange(20);
 //        mChart.setVisibleYRange(20f, AxisDependency.LEFT);
@@ -147,6 +125,7 @@ public class ReportsFragment extends Fragment {
 
         // get the legend (only possible after setting data)
         Legend l = mChart.getLegend();
+        l.setEnabled(false);
 
         // modify the legend ...
         // l.setPosition(LegendPosition.LEFT_OF_CHART);
@@ -156,11 +135,11 @@ public class ReportsFragment extends Fragment {
         // mChart.invalidate();
     }
 
-    private void setData(int count, float range){
+    private void setData(int count){
 
-        // xVals containes the dates
+        // xVals contains the days of the month
         ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 32; i++) {
             xVals.add((i) + "");
         }
 
