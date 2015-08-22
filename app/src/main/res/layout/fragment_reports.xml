@@ -1,14 +1,26 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.stevesoft.smartfinances.ui.ReportsFragment">
 
+    <ScrollView
+        android:layout_height="fill_parent"
+        android:layout_width="fill_parent"
+        android:paddingBottom="50dp" >
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/custom_border"
         android:layout_margin="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/daily_expenses">
 
         <TextView
             android:layout_width="wrap_content"
@@ -23,4 +35,27 @@
             android:id="@+id/line_chart"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/custom_border"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monthly Expenses"
+            android:layout_margin="10dp"
+            android:textSize="18sp"/>
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bar_chart"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
 </FrameLayout>

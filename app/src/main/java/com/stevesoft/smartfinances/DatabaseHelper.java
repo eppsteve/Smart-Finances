@@ -243,4 +243,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
         return cursor;
     }
+
+    public Cursor getMonthlyExpenses(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUBSTR(DATE,7,2) as MONTH, SUM(PRICE*(-1)) AS PRICE " +
+                "FROM TRANSACTIONS  " +
+                "WHERE TYPE = 'EXPENSE' AND (DATE BETWEEN date('now', 'start of year') AND " +
+                "                           date('now','start of year', '+1 year', '-1 day'))  " +
+                "GROUP BY MONTH   " +
+                "ORDER BY DATE ", null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        return cursor;
+    }
 }

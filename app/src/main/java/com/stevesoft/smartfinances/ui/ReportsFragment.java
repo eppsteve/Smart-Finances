@@ -3,21 +3,28 @@ package com.stevesoft.smartfinances.ui;
 
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ValueFormatter;
 import com.stevesoft.smartfinances.R;
 
 import java.util.ArrayList;
@@ -29,8 +36,9 @@ import java.util.ArrayList;
 public class ReportsFragment extends Fragment {
 
     LineChart mChart;
-    Integer[] xData;
-    Float[] yData;
+    BarChart mChart2;
+    Integer[] xData, xDataMonth;
+    Float[] yData, yDataMonthExpense;
 
     public ReportsFragment() {
         // Required empty public constructor
@@ -44,9 +52,12 @@ public class ReportsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_reports, container, false);
 
         mChart = (LineChart) view.findViewById(R.id.line_chart);
+        mChart2 = (BarChart) view.findViewById(R.id.bar_chart);
         mChart.setDrawGridBackground(false);
+        mChart2.setDrawGridBackground(false);
 
-        // get data from db
+        // LINE CHART //
+        // get data from db for line chart
         Cursor c = MainActivity.myDb.getDailyExpenses();
         int count = c.getCount();
         ArrayList<Integer> date = new ArrayList<Integer>();
@@ -59,11 +70,30 @@ public class ReportsFragment extends Fragment {
             } while (c.moveToNext());
         }
 
-        //convert arraylists to arrays
+        //convert arraylists to arrays for line chart
         xData = date.toArray(new Integer[date.size()]);
         yData = amount.toArray(new Float[amount.size()]);
 
         setUpLineChart(count);
+
+
+        // BAR CHART //
+        Cursor cur = MainActivity.myDb.getMonthlyExpenses();
+        ArrayList<Integer> month = new ArrayList<>();
+        ArrayList<Float> month_expense = new ArrayList<>();
+        if (cur != null) {
+            cur.moveToFirst();
+            while (!cur.isAfterLast()) {
+                month.add(cur.getInt(0));
+                month_expense.add(cur.getFloat(1));
+                cur.moveToNext();
+            }
+        }
+        //convert arraylists to arrays for line chart
+        xDataMonth = month.toArray(new Integer[date.size()]);
+        yDataMonthExpense = month_expense.toArray(new Float[amount.size()]);
+
+        setUpBarChart();
 
         return view;
     }
@@ -179,5 +209,92 @@ public class ReportsFragment extends Fragment {
         mChart.setData(data);
     }
 
+    private void setUpBarChart(){
 
+        mChart.setDescription("");
+
+        // if more than 60 entries are displayed in the chart, no values will be
+        // drawn
+        mChart.setMaxVisibleValueCount(60);
+
+        // scaling can now only be done on x- and y-axis separately
+        mChart.setPinchZoom(false);
+
+        // draw shadows for each bar that show the maximum value
+        // mChart.setDrawBarShadow(true);
+
+        // mChart.setDrawXLabels(false);
+
+        mChart.setDrawGridBackground(false);
+        // mChart.setDrawYLabels(false);
+
+        //mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        //xAxis.setTypeface(mTf);
+        xAxis.setDrawGridLines(false);
+        xAxis.setSpaceBetweenLabels(2);
+
+        //ValueFormatter custom = new MyValueFormatter();
+
+        YAxis leftAxis = mChart.getAxisLeft();
+        //leftAxis.setTypeface(mTf);
+        leftAxis.setLabelCount(8, false);
+        //leftAxis.setValueFormatter(custom);
+        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+        leftAxis.setSpaceTop(15f);
+
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+        //rightAxis.setTypeface(mTf);
+        rightAxis.setLabelCount(8, false);
+        //rightAxis.setValueFormatter(custom);
+        rightAxis.setSpaceTop(15f);
+
+        Legend l = mChart.getLegend();
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setForm(Legend.LegendForm.SQUARE);
+        l.setFormSize(9f);
+        l.setTextSize(11f);
+        l.setXEntrySpace(4f);
+        // l.setExtra(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
+        // "def", "ghj", "ikl", "mno" });
+        // l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
+        // "def", "ghj", "ikl", "mno" });
+
+        setBarChartData(12, 50);
+
+        // mChart.setDrawLegend(false);
+    }
+
+    private void setBarChartData(int count, float range) {
+        String[] mMonths = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i = 0; i < count; i++) {
+            xVals.add(mMonths[i % 12]);
+        }
+
+        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+
+        for (int i = 0; i < yDataMonthExpense.length; i++) {
+            Log.e("kmkm", xDataMonth[i]+"");
+            if (yDataMonthExpense[i] != null)
+            yVals1.add(new BarEntry(yDataMonthExpense[i], xDataMonth[i]-1));
+        }
+
+        BarDataSet set1 = new BarDataSet(yVals1, "");
+        set1.setBarSpacePercent(35f);
+
+        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        dataSets.add(set1);
+
+        BarData barData = new BarData(xVals, dataSets);
+        // data.setValueFormatter(new MyValueFormatter());
+        barData.setValueTextSize(10f);
+        //data.setValueTypeface(mTf);
+
+        mChart2.setData(barData);
+    }
 }
