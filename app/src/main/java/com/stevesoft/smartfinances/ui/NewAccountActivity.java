@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.stevesoft.smartfinances.R;
 import com.stevesoft.smartfinances.model.Account;
 
-public class NewAccount extends ActionBarActivity {
+public class NewAccountActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class NewAccount extends ActionBarActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("New Account");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setUpGUI();
     }
@@ -56,21 +57,21 @@ public class NewAccount extends ActionBarActivity {
                 Account account = new Account(name, amount, currency);
 
                 if (MainActivity.myDb.insertAccount(account))
-                    Toast.makeText(NewAccount.this, "Account Created.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Account Created.", Toast.LENGTH_SHORT).show();
                 else
-                    Toast.makeText(NewAccount.this, "Failed to create new account.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAccountActivity.this, "Failed to create new account.", Toast.LENGTH_SHORT).show();
 
                 finish();
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_new_account, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_new_account, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

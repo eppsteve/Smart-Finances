@@ -25,7 +25,7 @@ import com.stevesoft.smartfinances.model.Transaction;
 
 import java.util.Calendar;
 
-public class NewTransaction extends ActionBarActivity {
+public class NewTransactionActivity extends ActionBarActivity {
 
     // used for datepicker
     int _year, _month, _day;
@@ -51,9 +51,11 @@ public class NewTransaction extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_transaction);
 
+        // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //toolbar.setTitle("New Transaction");
-        //setSupportActionBar(toolbar);
+        toolbar.setTitle("New Transaction");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final Calendar cal = Calendar.getInstance();
         _year = cal.get(Calendar.YEAR);
@@ -207,12 +209,12 @@ public class NewTransaction extends ActionBarActivity {
         }
     };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_new_transaction, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_new_transaction, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -247,10 +249,10 @@ public class NewTransaction extends ActionBarActivity {
 
             boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
             if (isInserted) {
-                Toast.makeText(NewTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewTransactionActivity.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(NewTransaction.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewTransactionActivity.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
                 finish();
             }
         } else if (rbIncome.isChecked()){
@@ -261,10 +263,10 @@ public class NewTransaction extends ActionBarActivity {
             Transaction transaction = new Transaction(tr_date, tr_price, tr_description, category_id, account_id, transaction_type);
             boolean isInserted = MainActivity.myDb.insertTransaction(transaction);
             if (isInserted) {
-                Toast.makeText(NewTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewTransactionActivity.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(NewTransaction.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewTransactionActivity.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
                 finish();
             }
         } else if (rbTransfer.isChecked()){
@@ -275,10 +277,10 @@ public class NewTransaction extends ActionBarActivity {
             Transaction transaction = new Transaction(tr_date, tr_price, tr_description, category_id, account_id, transaction_type, to_account_id);
             boolean isInserted = MainActivity.myDb.transferFunds(transaction);
             if (isInserted){
-                Toast.makeText(NewTransaction.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewTransactionActivity.this, "Transaction inserted.", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(NewTransaction.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewTransactionActivity.this, "Failed to insert transaction.", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

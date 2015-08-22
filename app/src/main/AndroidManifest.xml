@@ -17,12 +17,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.NewTransaction"
+            android:name=".ui.NewTransactionActivity"
             android:label="@string/title_activity_new_transaction" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.stevesoft.smartfinances.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.NewAccount"
+            android:name=".ui.NewAccountActivity"
             android:label="@string/title_activity_new_account" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.stevesoft.smartfinances.ui.MainActivity" />
         </activity>
     </application>
 

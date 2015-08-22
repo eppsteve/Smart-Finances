@@ -1,22 +1,12 @@
 package com.stevesoft.smartfinances.ui;
 
-import java.util.Locale;
-
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.stevesoft.smartfinances.DatabaseHelper;
 import com.stevesoft.smartfinances.R;
@@ -91,10 +81,10 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         else if (id == R.id.action_add){
-            Intent intent = new Intent(this, NewTransaction.class);
+            Intent intent = new Intent(this, NewTransactionActivity.class);
             startActivity(intent);
         } else if (id == R.id.new_account){
-            startActivity(new Intent(this, NewAccount.class));
+            startActivity(new Intent(this, NewAccountActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
