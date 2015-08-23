@@ -51,6 +51,7 @@
                 <com.github.mikephil.charting.charts.BarChart
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:minHeight="220dp"
                     android:id="@+id/bar_chart"/>
 
             </LinearLayout>

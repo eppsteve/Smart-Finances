@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TRANSACTION_TABLE);
 
         // insert sample date
-        db.execSQL("INSERT INTO ACCOUNT (NAME, AMOUNT, CURRENCY) VALUES ('My Account', 5000, 'EUR')");
+        //db.execSQL("INSERT INTO ACCOUNT (NAME, AMOUNT, CURRENCY) VALUES ('My Account', 5000, 'EUR')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Food')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Transport')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Clothing')");
@@ -49,9 +49,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Other Expenses')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Income')");
         db.execSQL("INSERT INTO CATEGORY (NAME) VALUES ('Transfer')");
-        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID, TYPE) VALUES ('2015-08-01', -24, 'Super Market', 1, 1, 'EXPENSE')");
-//        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -48, 'Weekend', 2, 1)");
-//        db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID) VALUES ('2015-08-01', -5.40, 'coffee', 4, 1)");
+        //db.execSQL("INSERT INTO TRANSACTIONS (DATE, PRICE, DESCRIPTION, CATEGORY_ID, ACCOUNT_ID, TYPE) VALUES ('2015-08-01', -24, 'Super Market', 1, 1, 'EXPENSE')");
     }
 
     @Override
