@@ -144,7 +144,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CATEGORY.NAME AS CATEGORY_NAME, TRANSACTIONS.TYPE, ACCOUNT.NAME AS ACCOUNT_NAME, TRANSACTIONS.TO_ACCOUNT " +
                 "FROM TRANSACTIONS " +
                 "INNER JOIN CATEGORY ON CATEGORY._ID = TRANSACTIONS.CATEGORY_ID " +
-                "INNER JOIN ACCOUNT ON TRANSACTIONS.ACCOUNT_ID = ACCOUNT._id", null);
+                "INNER JOIN ACCOUNT ON TRANSACTIONS.ACCOUNT_ID = ACCOUNT._id " +
+                "ORDER BY DATE DESC ", null);
         if (cursor != null)
             cursor.moveToFirst();
         return cursor;
@@ -174,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // gets all the expenses of the current month BY CATEGORY
     public Cursor getThisMonthExpenses(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT TRANSACTIONS.DATE, SUM(PRICE) AS PRICE, CATEGORY.NAME AS CATEGORY\n" +
+        Cursor cursor = db.rawQuery("SELECT TRANSACTIONS.DATE, SUM(PRICE*(-1)) AS PRICE, CATEGORY.NAME AS CATEGORY " +
                 "FROM TRANSACTIONS " +
                 "JOIN CATEGORY ON TRANSACTIONS.CATEGORY_id = CATEGORY._id " +
                 "WHERE (DATE BETWEEN date('now','start of month') AND date('now','start of month', '+1 months', '-1 day')) " +

@@ -12,4 +12,6 @@
     <color name="ColorPrimaryDark">#1976D2</color>
     <color name="tabsScrollColor">#FFFFFF</color>
 
+    <color name="black_overlay">#66000000</color>
+
 </resources>

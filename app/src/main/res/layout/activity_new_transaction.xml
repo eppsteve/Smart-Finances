@@ -192,17 +192,21 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />
 
-    <EditText
+    <TextView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:inputType="date"
+        android:text="ee"
         android:ems="10"
         android:id="@+id/txtDate"
         android:layout_below="@+id/lblDate"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/btnDate"
-        android:layout_toStartOf="@+id/btnDate" />
+        android:layout_toStartOf="@+id/btnDate"
+        android:layout_marginTop="5dp"
+        android:textSize="20sp"
+        android:paddingLeft="20dp"
+        android:textColor="@color/black" />
 
 
 
@@ -226,7 +230,8 @@
         android:id="@+id/btnDate"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp" />
 </RelativeLayout>
     </ScrollView>
 

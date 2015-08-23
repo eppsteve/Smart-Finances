@@ -41,15 +41,14 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         TextView txtDescription = (TextView) view.findViewById(R.id.textViewDescription);
         TextView txtCategory = (TextView) view.findViewById(R.id.textViewCategory);
         TextView txtPrice = (TextView) view.findViewById(R.id.textViewPrice);
-        //TextView txtDate = (TextView) view.findViewById(R.id.textViewDate);
         TextView txtMonth = (TextView) view.findViewById(R.id.textViewMonth);
         TextView txtDay = (TextView) view.findViewById(R.id.textViewDay);
         TextView txtYear = (TextView) view.findViewById(R.id.textViewYear);
         TextView txtAccount = (TextView) view.findViewById(R.id.textViewAccount);
         TextView txtType = (TextView) view.findViewById(R.id.textViewType);
-        TextView txtToAccount = (TextView) view.findViewById(R.id.textViewToAccount);
+        //TextView txtToAccount = (TextView) view.findViewById(R.id.textViewToAccount);
 
-        String to_account = "";
+        //String to_account = "";
 
         // Extract properties from cursor
         //int _id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
@@ -59,9 +58,9 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         String category_name = cursor.getString(cursor.getColumnIndexOrThrow("CATEGORY_NAME"));
         String account_name = cursor.getString(cursor.getColumnIndexOrThrow("ACCOUNT_NAME"));
         String type = cursor.getString(cursor.getColumnIndexOrThrow("TYPE"));
-        if (!cursor.isNull(7)) {
-            to_account = cursor.getString(cursor.getColumnIndexOrThrow("TO_ACCOUNT"));
-        }
+//        if (!cursor.isNull(7)) {
+//            to_account = cursor.getString(cursor.getColumnIndexOrThrow("TO_ACCOUNT"));
+//        }
 
         // Populate fields with extracted properties
         txtDescription.setText(description);
@@ -91,8 +90,8 @@ public class TransactionsCursorAdapter extends CursorAdapter {
             txtPrice.setTextColor(context.getResources().getColor(R.color.red));
         else if (type.equals("TRANSFER")) {
             txtPrice.setTextColor(context.getResources().getColor(R.color.black));
-            txtToAccount.setVisibility(View.VISIBLE);
-            txtToAccount.setText("-> " + to_account);
+//            txtToAccount.setVisibility(View.VISIBLE);
+//            txtToAccount.setText("-> " + to_account);
         }
     }
 }

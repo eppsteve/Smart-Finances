@@ -244,6 +244,7 @@ public class ReportsFragment extends Fragment {
         //leftAxis.setValueFormatter(custom);
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
+        leftAxis.setDrawGridLines(false);
 
         YAxis rightAxis = mChart.getAxisRight();
         rightAxis.setDrawGridLines(false);
@@ -253,24 +254,25 @@ public class ReportsFragment extends Fragment {
         rightAxis.setSpaceTop(15f);
 
         Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        l.setForm(Legend.LegendForm.SQUARE);
-        l.setFormSize(9f);
-        l.setTextSize(11f);
-        l.setXEntrySpace(4f);
+//        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+//        l.setForm(Legend.LegendForm.SQUARE);
+//        l.setFormSize(9f);
+//        l.setTextSize(11f);
+//        l.setXEntrySpace(4f);
+        l.setEnabled(false);
         // l.setExtra(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
         // "def", "ghj", "ikl", "mno" });
         // l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "abc",
         // "def", "ghj", "ikl", "mno" });
 
-        setBarChartData(12, 50);
+        setBarChartData(12);
 
         // mChart.setDrawLegend(false);
     }
 
-    private void setBarChartData(int count, float range) {
+    private void setBarChartData(int count) {
         String[] mMonths = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        
+
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i = 0; i < count; i++) {
             xVals.add(mMonths[i % 12]);
@@ -279,7 +281,6 @@ public class ReportsFragment extends Fragment {
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
         for (int i = 0; i < yDataMonthExpense.length; i++) {
-            Log.e("kmkm", xDataMonth[i]+"");
             if (yDataMonthExpense[i] != null)
             yVals1.add(new BarEntry(yDataMonthExpense[i], xDataMonth[i]-1));
         }

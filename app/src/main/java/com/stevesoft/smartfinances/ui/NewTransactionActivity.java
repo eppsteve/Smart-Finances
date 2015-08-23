@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,8 +32,8 @@ public class NewTransactionActivity extends ActionBarActivity {
     int _year, _month, _day;
     static final int DIALOG_ID = 0;
 
-    EditText txtDate, txtPrice, txtDescription;
-    TextView lblWithdraw, lblToAccount;
+    EditText txtPrice, txtDescription;
+    TextView lblWithdraw, lblToAccount, txtDate;
     RadioButton rbExpense, rbIncome, rbTransfer;
     Spinner spCategory, spWithdraw, spToAccount;
     Toolbar toolbar;
@@ -72,7 +73,7 @@ public class NewTransactionActivity extends ActionBarActivity {
         lblToAccount = (TextView) findViewById(R.id.lblToAccount);
         txtDescription = (EditText) findViewById(R.id.txtDescription);
         txtPrice = (EditText) findViewById(R.id.txtPrice);
-        txtDate = (EditText) findViewById(R.id.txtDate);
+        txtDate = (TextView) findViewById(R.id.txtDate);
         Button btnSave = (Button) findViewById(R.id.btnSave);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
         rbExpense = (RadioButton) findViewById(R.id.rbExpense);
@@ -154,6 +155,11 @@ public class NewTransactionActivity extends ActionBarActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(txtPrice.getText()))
+                    txtPrice.setError("Price cannot be empty!");
+                else if (TextUtils.isEmpty(txtDescription.getText()))
+                    txtDescription.setError("Description cannot be empty!");
+                else
                 insertTransaction();
             }
         });

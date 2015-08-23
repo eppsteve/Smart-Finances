@@ -3,14 +3,12 @@ package com.stevesoft.smartfinances.ui;
 
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +49,8 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
     private float thisMonthIncome;
     private float thisMonthExpenses;
 
+    String current_month;
+
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -78,9 +78,9 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         // Get current month balance
         Calendar cal= Calendar.getInstance();
         SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-        String month_name = month_date.format(cal.getTime());
+        current_month = month_date.format(cal.getTime());
         // set month name
-        txtThisMonth.setText(txtThisMonth.getText() + month_name);
+        txtThisMonth.setText(txtThisMonth.getText() + current_month);
         // round double to 2 decimal places
         // set month balance
         txtThisMonthBalance.setText(String.format("%.2f", MainActivity.myDb.getThisMonthBalance()) + "EUR");
@@ -125,7 +125,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         // enable rotation of the chart by touch
         mChart.setRotationEnabled(true);
 
-        mChart.setCenterText("Expenses\nThis month");
+        mChart.setCenterText(current_month.toUpperCase());
 
         addData();
 

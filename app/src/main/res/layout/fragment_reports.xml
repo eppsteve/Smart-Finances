@@ -6,56 +6,55 @@
 
     <ScrollView
         android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:paddingBottom="50dp" >
+        android:layout_width="fill_parent" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/custom_border"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:id="@+id/daily_expenses">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Daily Expenses"
-            android:layout_margin="10dp"
-            android:textSize="18sp"/>
-
-        <com.github.mikephil.charting.charts.LineChart
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/line_chart"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/custom_border"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Monthly Expenses"
-            android:layout_margin="10dp"
-            android:textSize="18sp"/>
+            android:orientation="vertical">
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/bar_chart"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_border"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:id="@+id/daily_expenses">
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daily Expenses"
+                    android:layout_margin="10dp"
+                    android:textSize="18sp"/>
 
-    </LinearLayout>
-</ScrollView>
+                <com.github.mikephil.charting.charts.LineChart
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/line_chart"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:background="@drawable/custom_border"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monthly Expenses"
+                    android:layout_margin="10dp"
+                    android:textSize="18sp"/>
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/bar_chart"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
