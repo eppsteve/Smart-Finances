@@ -38,6 +38,7 @@ public class TransactionsCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         // Find fields to populate in inflated template
+        TextView txtId = (TextView) view.findViewById(R.id.textViewTransactionId);
         TextView txtDescription = (TextView) view.findViewById(R.id.textViewDescription);
         TextView txtCategory = (TextView) view.findViewById(R.id.textViewCategory);
         TextView txtPrice = (TextView) view.findViewById(R.id.textViewPrice);
@@ -51,7 +52,7 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         //String to_account = "";
 
         // Extract properties from cursor
-        //int _id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
+        int _id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
         String date = cursor.getString(cursor.getColumnIndexOrThrow("DATE"));
         double price = cursor.getDouble(cursor.getColumnIndexOrThrow("PRICE"));
         String description = cursor.getString(cursor.getColumnIndexOrThrow("DESCRIPTION"));
@@ -63,6 +64,7 @@ public class TransactionsCursorAdapter extends CursorAdapter {
 //        }
 
         // Populate fields with extracted properties
+        txtId.setText(_id +"");
         txtDescription.setText(description);
         txtCategory.setText(category_name);
         txtPrice.setText("" + price);

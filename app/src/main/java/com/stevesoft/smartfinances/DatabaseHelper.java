@@ -130,6 +130,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public int deleteTransaction(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("TRANSACTIONS", "_id = " +id, null);
+    }
+
 
     public Cursor getAllTransactions(){
 

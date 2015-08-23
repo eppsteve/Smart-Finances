@@ -95,6 +95,16 @@
             android:layout_toEndOf="@+id/textViewCategory"
             android:layout_marginLeft="5dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:id="@+id/textViewTransactionId"
+            android:layout_alignBottom="@+id/textViewAccount"
+            android:layout_toRightOf="@+id/textViewAccount"
+            android:layout_toEndOf="@+id/textViewAccount"
+            android:visibility="gone" />
+
         <!--<TextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
