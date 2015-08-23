@@ -18,6 +18,8 @@
     <string name="title_activity_new_account">NewAccount</string>
 
     <string name="title_activity_welcome">WelcomeActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="welcome_activity_content">DUMMY\nCONTENT</string>
+    <string name="welcome_button">Ready!</string>
+    <string name="welcome_activity_content">Welcome to\nSmart Finances</string>
+
+    <string name="pref_previously_started">HasPreviouslyRun</string>
 </resources>

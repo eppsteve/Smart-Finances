@@ -1,37 +1,89 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="#0099cc"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#0099cc"
     tools:context="com.stevesoft.smartfinances.ui.WelcomeActivity">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
     <TextView android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:keepScreenOn="true"
         android:textColor="#33b5e5"
         android:textStyle="bold"
-        android:textSize="50sp"
+        android:textSize="45sp"
         android:gravity="center"
         android:text="@string/welcome_activity_content" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout android:layout_width="match_parent" android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <TextView
+        android:id="@+id/welcome_select_currency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select your Currency"
+        android:layout_below="@id/fullscreen_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp"/>
 
-        <LinearLayout android:id="@+id/fullscreen_content_controls" style="?metaButtonBarStyle"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay" android:orientation="horizontal"
-            tools:ignore="UselessParent">
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_select_currency"
+        android:id="@+id/welcome_spinner_currency">
 
-            <Button android:id="@+id/dummy_button" style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp" android:layout_height="wrap_content"
-                android:layout_weight="1" android:text="@string/dummy_button" />
+    </Spinner>
 
-        </LinearLayout>
-    </FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome_txt_add_new_account"
+        android:text="Add a new Account"
+        android:layout_below="@id/welcome_spinner_currency"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="40dp"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name               "
+        android:layout_below="@id/welcome_txt_add_new_account"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:id="@+id/welcome_txt_account_name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_txt_add_new_account"
+        android:layout_toRightOf="@id/welcome_txt_account_name"
+        android:text="My Account"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/welcome_editText_account_name"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/welcome_txt_initial_balance"
+        android:layout_below="@id/welcome_txt_account_name"
+        android:text="Initial Balance"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:layout_below="@id/welcome_editText_account_name"
+        android:layout_toRightOf="@id/welcome_txt_initial_balance"
+        android:layout_marginLeft="20dp"/>
+
+    <Button android:id="@+id/dummy_button"
+        style="?metaButtonBarButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_button"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

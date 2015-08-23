@@ -40,6 +40,8 @@ public class MainActivity extends ActionBarActivity {
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(getString(R.string.pref_previously_started), Boolean.TRUE);
             edit.commit();
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
         }
 
         // Creating The Toolbar and setting it as the Toolbar for the activity

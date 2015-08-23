@@ -33,9 +33,7 @@
         </activity>
         <activity
             android:name=".ui.WelcomeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_welcome"
-            android:theme="@style/FullscreenTheme" >
+            android:label="@string/title_activity_welcome" >
         </activity>
     </application>
 
