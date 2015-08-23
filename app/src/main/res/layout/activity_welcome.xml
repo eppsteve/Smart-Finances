@@ -60,7 +60,8 @@
         android:layout_toRightOf="@id/welcome_txt_account_name"
         android:text="My Account"
         android:layout_marginLeft="20dp"
-        android:id="@+id/welcome_editText_account_name"/>
+        android:id="@+id/welcome_editText_account_name"
+        android:singleLine="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,10 +76,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="0"
+        android:inputType="numberDecimal"
         android:id="@+id/welcome_initial_balance"
         android:layout_below="@id/welcome_editText_account_name"
         android:layout_toRightOf="@id/welcome_txt_initial_balance"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:singleLine="true" />
 
     <Button android:id="@+id/dummy_button"
         style="?metaButtonBarButtonStyle"
@@ -86,5 +89,6 @@
         android:layout_height="wrap_content"
         android:text="@string/welcome_button"
         android:layout_alignParentBottom="true"/>
+
 
 </RelativeLayout>
