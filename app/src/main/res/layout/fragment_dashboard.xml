@@ -4,7 +4,6 @@
     tools:context="com.stevesoft.smartfinances.ui.DashboardFragment"
     android:background="@color/background_material_light">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
         android:layout_width="match_parent"

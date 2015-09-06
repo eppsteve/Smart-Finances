@@ -92,13 +92,16 @@ public class TransactionsFragment extends Fragment {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.menu_edit:
+
+                    // TODO: Implement edit transaction functionality
                     Toast.makeText(getActivity(), "Editing!", Toast.LENGTH_SHORT).show();
                     mode.finish(); // Action picked, so close the contextual menu
                     return true;
+
                 case R.id.menu_delete:
                     // Trigger the deletion here
 
-                    // Get transaction id from textview in listView
+                    // Get transaction id from TextView in listView
                     View v = listView.getChildAt(currentListItemIndex);
                     TextView txtId = (TextView) v.findViewById(R.id.textViewTransactionId);
                     int id = Integer.parseInt(txtId.getText().toString());

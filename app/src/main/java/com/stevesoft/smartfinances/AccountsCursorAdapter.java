@@ -9,7 +9,7 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 /**
- * Created by steve on 7/19/15.
+ * Created by Steve Alogaris on 7/19/15.
  */
 public class AccountsCursorAdapter extends CursorAdapter {
 
@@ -27,7 +27,9 @@ public class AccountsCursorAdapter extends CursorAdapter {
         TextView txtAcountName = (TextView) view.findViewById(R.id.textViewAcountName);
         TextView txtAmount = (TextView) view.findViewById(R.id.textViewAmount);
         TextView txtCurrency = (TextView) view.findViewById(R.id.textViewCurrency);
+        TextView txtAccountId = (TextView) view.findViewById(R.id.textViewAccountId);
 
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
         String name = cursor.getString(cursor.getColumnIndexOrThrow("NAME"));
         double amount = cursor.getDouble(cursor.getColumnIndexOrThrow("AMOUNT"));
         String currency = cursor.getString(cursor.getColumnIndexOrThrow("CURRENCY"));
@@ -35,5 +37,6 @@ public class AccountsCursorAdapter extends CursorAdapter {
         txtAcountName.setText(name);
         txtAmount.setText(""+amount);
         txtCurrency.setText(currency);
+        txtAccountId.setText(id +"");
     }
 }

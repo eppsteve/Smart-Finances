@@ -135,6 +135,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.delete("TRANSACTIONS", "_id = " +id, null);
     }
 
+    public int deleteAccount(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("ACCOUNT", "_id = " +id, null);
+    }
+
 
     public Cursor getAllTransactions(){
 
