@@ -2,8 +2,10 @@ package com.stevesoft.smartfinances.ui;
 
 
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -30,6 +32,7 @@ public class TransactionsFragment extends Fragment {
 
     // Tracks current contextual action mode
     private ActionMode currentActionMode;
+
     // Tracks current menu item
     private int currentListItemIndex;
 
@@ -45,7 +48,7 @@ public class TransactionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_transactions, container, false);
 
         listView = (ListView) view.findViewById(R.id.listView);
-        Cursor myCursor = (Cursor) MainActivity.myDb.getAllTransactions();
+        Cursor myCursor = MainActivity.myDb.getAllTransactions();
         transactionsAdapter = new TransactionsCursorAdapter(getActivity(), myCursor);
         listView.setAdapter(transactionsAdapter);
 
@@ -70,7 +73,7 @@ public class TransactionsFragment extends Fragment {
         super.onResume();
 
         // Switch to new cursor and update contents of ListView
-        transactionsAdapter.changeCursor((Cursor) MainActivity.myDb.getAllTransactions());
+        transactionsAdapter.changeCursor(MainActivity.myDb.getAllTransactions());
     }
 
     // Define the callback when ActionMode is activated
@@ -80,7 +83,7 @@ public class TransactionsFragment extends Fragment {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.setTitle("Actions");
-            mode.getMenuInflater().inflate(R.menu.actions_textview, menu);
+            getActivity().getMenuInflater().inflate(R.menu.actions_textview, menu);
             return true;
         }
 
