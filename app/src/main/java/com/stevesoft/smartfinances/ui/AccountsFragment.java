@@ -92,14 +92,6 @@ public class AccountsFragment extends Fragment {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.menu_edit:
-
-                    // TODO: Implement edit account functionality
-                    Toast.makeText(getActivity(), "Editing!", Toast.LENGTH_SHORT).show();
-
-                    // Action picked, so close the contextual menu
-                    mode.finish();
-                    return true;
 
                 case R.id.menu_delete:
 

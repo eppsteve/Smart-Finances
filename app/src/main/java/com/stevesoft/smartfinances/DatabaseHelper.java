@@ -11,6 +11,7 @@ import com.stevesoft.smartfinances.model.Transaction;
 
 /**
  * Created by steve on 7/18/15.
+ * steve.alogaris@outlook.com
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -28,7 +29,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
@@ -79,14 +79,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = "+ transaction.getAccount_id();
         db.execSQL(query);
 
-
-        if (result==-1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
-
+    /**
+     * transfers money from one account to another
+     */
     public boolean transferFunds(Transaction transaction){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -110,10 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query2 = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+transaction.getPrice()+" WHERE _id = "+ transaction.getDestinationAccount();
         db.execSQL(query2);
 
-        if (result1 ==-1)
-            return false;
-        else
-            return true;
+        return result1 != -1;
     }
 
     public boolean insertAccount(Account account){
@@ -124,10 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("CURRENCY", account.getCurrency());
         long result = db.insert("ACCOUNT", null, contentValues);
 
-        if (result==-1)
-            return false;
-        else
-            return true;
+        return result != -1;
     }
 
     public int deleteTransaction(int id){
@@ -143,13 +135,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllTransactions(){
 
-        // Get access to the underlying writeable database
+        // Get access to the underlying writable database
         SQLiteDatabase db = this.getWritableDatabase();
 
         // Query for items from the database and get a cursor back
         Cursor cursor = db.rawQuery("SELECT " +
                 "TRANSACTIONS._id, TRANSACTIONS.DATE, TRANSACTIONS.PRICE, TRANSACTIONS.DESCRIPTION, " +
-                "CATEGORY.NAME AS CATEGORY_NAME, TRANSACTIONS.TYPE, ACCOUNT.NAME AS ACCOUNT_NAME, TRANSACTIONS.TO_ACCOUNT " +
+                "CATEGORY.NAME AS CATEGORY_NAME, TRANSACTIONS.TYPE, ACCOUNT.NAME AS ACCOUNT_NAME, " +
+                "TRANSACTIONS.TO_ACCOUNT, ACCOUNT._id AS ACCOUNT_ID " +
                 "FROM TRANSACTIONS " +
                 "INNER JOIN CATEGORY ON CATEGORY._ID = TRANSACTIONS.CATEGORY_ID " +
                 "INNER JOIN ACCOUNT ON TRANSACTIONS.ACCOUNT_ID = ACCOUNT._id " +

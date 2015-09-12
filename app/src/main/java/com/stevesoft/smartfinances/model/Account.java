@@ -2,6 +2,7 @@ package com.stevesoft.smartfinances.model;
 
 /**
  * Created by steve on 7/18/15.
+ *
  */
 public class Account {
 

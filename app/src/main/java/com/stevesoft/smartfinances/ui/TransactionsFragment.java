@@ -2,11 +2,8 @@ package com.stevesoft.smartfinances.ui;
 
 
 import android.database.Cursor;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,8 +57,6 @@ public class TransactionsFragment extends Fragment {
                 currentActionMode = getActivity().startActionMode(modeCallBack);
                 view.setSelected(true);
                 return true;
-
-
             }
         });
 
@@ -91,23 +86,28 @@ public class TransactionsFragment extends Fragment {
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.menu_edit:
-
-                    // TODO: Implement edit transaction functionality
-                    Toast.makeText(getActivity(), "Editing!", Toast.LENGTH_SHORT).show();
-                    mode.finish(); // Action picked, so close the contextual menu
-                    return true;
-
                 case R.id.menu_delete:
-                    // Trigger the deletion here
+
+                    // Get selected row
+                    View v = listView.getChildAt(currentListItemIndex);
 
                     // Get transaction id from TextView in listView
-                    View v = listView.getChildAt(currentListItemIndex);
                     TextView txtId = (TextView) v.findViewById(R.id.textViewTransactionId);
                     int id = Integer.parseInt(txtId.getText().toString());
-                    Log.e("PRICE", id+"");
 
-                    // delete transaction
+                    // Get type of transaction
+                    TextView txtType = (TextView) v.findViewById(R.id.textViewType);
+                    String type = txtType.getText().toString();
+
+                    // Get amount of transaction
+                    TextView txtAmount = (TextView) v.findViewById(R.id.textViewPrice);
+                    double price = Double.parseDouble(txtAmount.getText().toString());
+
+                    // Get account id of transaction
+                    TextView txtAccountId = (TextView) v.findViewById(R.id.textViewAccountId);
+                    int account_id = Integer.parseInt(txtAccountId.getText().toString());
+
+                    // Delete transaction
                     if (MainActivity.myDb.deleteTransaction(id) > 0 ) {
                         // update listView
 
@@ -115,6 +115,38 @@ public class TransactionsFragment extends Fragment {
                     }
                     else {
                         Toast.makeText(getActivity(), "Could not delete transaction", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    // Determine transaction type and update db
+                    String query;
+                    switch (type) {
+                        case "income":
+                            query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT - "+price+" WHERE _id = "+ account_id;
+                            MainActivity.myDb.getWritableDatabase().execSQL(query);
+                            MainActivity.myDb.close();
+                            break;
+                        case "expense":
+                            // expenses are stored as negative numbers in db
+                            query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT - "+price+" WHERE _id = "+ account_id;
+                            MainActivity.myDb.getWritableDatabase().execSQL(query);
+                            MainActivity.myDb.close();
+                            break;
+                        case "transfer":
+                            // find destination account
+                            TextView txtDestination = (TextView) v.findViewById(R.id.textViewToAccount);
+                            int dest_account_id = Integer.parseInt(txtDestination.getText().toString());
+
+                            // remove money from destination account
+                            query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT - "+price+" WHERE _id = "+ dest_account_id;
+                            MainActivity.myDb.getWritableDatabase().execSQL(query);
+                            MainActivity.myDb.close();
+
+                            // add money back to source account
+                            query = "UPDATE ACCOUNT SET AMOUNT = AMOUNT + "+price+" WHERE _id = "+ account_id;
+                            MainActivity.myDb.getWritableDatabase().execSQL(query);
+                            MainActivity.myDb.close();
+                            break;
                     }
 
                     mode.finish(); // Action picked, so close the contextual menu

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 /**
  * Created by Steve Alogaris on 7/19/15.
+ * steve.alogaris@outlook.com
  */
 public class AccountsCursorAdapter extends CursorAdapter {
 

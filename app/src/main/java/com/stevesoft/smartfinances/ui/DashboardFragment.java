@@ -87,8 +87,8 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
 
         // get current month expenses by category from db
-        ArrayList<String> categories = new ArrayList<String>();
-        ArrayList<Float> amount = new ArrayList<Float>();
+        ArrayList<String> categories = new ArrayList<>();
+        ArrayList<Float> amount = new ArrayList<>();
         Cursor c = MainActivity.myDb.getThisMonthExpenses();
 
         if (c.moveToFirst()){
@@ -155,7 +155,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
     // adds data to Pie Chart
     private void addData(){
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+        ArrayList<Entry> yVals1 = new ArrayList<>();
 
         for (int i=0; i<yData.length; i++) {
             yVals1.add(new Entry(yData[i], i));
@@ -173,7 +173,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         dataset.setSelectionShift(5);
 
         // add many colors
-        ArrayList<Integer> colors = new ArrayList<Integer>();
+        ArrayList<Integer> colors = new ArrayList<>();
 
         for (int c: ColorTemplate.VORDIPLOM_COLORS)
             colors.add(c);
@@ -261,8 +261,8 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
     }
 
     private void setBarChartData(){
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
-        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
+        ArrayList<String> xVals = new ArrayList<>();
 
         xVals.add(0, "Income");
         xVals.add(1, "Expenses");
@@ -271,7 +271,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
         BarDataSet set1 = new BarDataSet(yVals1, "");
 
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
         BarData data = new BarData(xVals, dataSets);

@@ -4,10 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.stevesoft.smartfinances.model.Account;
 
 /**
  * Created by steve on 8/16/15.
+ * steve.alogaris@outlook.com
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -30,19 +30,16 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {
-            DashboardFragment tab1 = new DashboardFragment();
-            return tab1;
-        }
-        else if (position == 1)
+            return new DashboardFragment();
+        } else if (position == 1)
         {
-            TransactionsFragment tab2 = new TransactionsFragment();
-            return tab2;
-        } else if (position == 2){
-            AccountsFragment tab3 = new AccountsFragment();
-            return tab3;
-        } else {
-            ReportsFragment tab4 = new ReportsFragment();
-            return tab4;
+            return new TransactionsFragment();
+        } else if (position == 2)
+        {
+            return new AccountsFragment();
+        } else
+        {
+            return new ReportsFragment();
         }
 
     }

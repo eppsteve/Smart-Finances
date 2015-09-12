@@ -2,7 +2,6 @@ package com.stevesoft.smartfinances;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,14 +11,9 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 /**
  * Created by steve on 7/19/15.
+ *
  */
 public class TransactionsCursorAdapter extends CursorAdapter {
 
@@ -47,9 +41,10 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         TextView txtYear = (TextView) view.findViewById(R.id.textViewYear);
         TextView txtAccount = (TextView) view.findViewById(R.id.textViewAccount);
         TextView txtType = (TextView) view.findViewById(R.id.textViewType);
-        //TextView txtToAccount = (TextView) view.findViewById(R.id.textViewToAccount);
+        TextView txtToAccount = (TextView) view.findViewById(R.id.textViewToAccount);
+        TextView txtAccountId = (TextView) view.findViewById(R.id.textViewAccountId);
 
-        //String to_account = "";
+        String to_account = "";
 
         // Extract properties from cursor
         int _id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
@@ -59,9 +54,10 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         String category_name = cursor.getString(cursor.getColumnIndexOrThrow("CATEGORY_NAME"));
         String account_name = cursor.getString(cursor.getColumnIndexOrThrow("ACCOUNT_NAME"));
         String type = cursor.getString(cursor.getColumnIndexOrThrow("TYPE"));
-//        if (!cursor.isNull(7)) {
-//            to_account = cursor.getString(cursor.getColumnIndexOrThrow("TO_ACCOUNT"));
-//        }
+        if (!cursor.isNull(7)) {
+            to_account = cursor.getString(cursor.getColumnIndexOrThrow("TO_ACCOUNT"));
+        }
+        int account_id = cursor.getInt(cursor.getColumnIndex("ACCOUNT_ID"));
 
         // Populate fields with extracted properties
         txtId.setText(_id +"");
@@ -70,8 +66,9 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         txtPrice.setText("" + price);
         txtAccount.setText("| " +account_name);
         txtType.setText(type.toLowerCase());
+        txtAccountId.setText(account_id +"");
 
-        // populate date textviews
+        // Populate date TextViews
         // the date format is yyyy/mm/dd
         if (date.length() > 1){
             int month = Integer.parseInt(TextUtils.substring(date, 5, 7));
@@ -86,14 +83,18 @@ public class TransactionsCursorAdapter extends CursorAdapter {
         }
 
         Log.e("TYPE", type);
-        if (type.equals("INCOME"))
-            txtPrice.setTextColor(context.getResources().getColor(R.color.green));
-        else if (type.equals("EXPENSE"))
-            txtPrice.setTextColor(context.getResources().getColor(R.color.red));
-        else if (type.equals("TRANSFER")) {
-            txtPrice.setTextColor(context.getResources().getColor(R.color.black));
-//            txtToAccount.setVisibility(View.VISIBLE);
-//            txtToAccount.setText("-> " + to_account);
+        switch (type) {
+            case "INCOME":
+                txtPrice.setTextColor(context.getResources().getColor(R.color.green));
+                break;
+            case "EXPENSE":
+                txtPrice.setTextColor(context.getResources().getColor(R.color.red));
+                break;
+            case "TRANSFER":
+                txtPrice.setTextColor(context.getResources().getColor(R.color.black));
+//              txtToAccount.setVisibility(View.VISIBLE);
+                txtToAccount.setText(to_account);
+                break;
         }
     }
 }

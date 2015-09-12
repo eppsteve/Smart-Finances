@@ -3,11 +3,10 @@ package com.stevesoft.smartfinances.ui;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +25,7 @@ import com.stevesoft.smartfinances.model.Transaction;
 
 import java.util.Calendar;
 
-public class NewTransactionActivity extends ActionBarActivity {
+public class NewTransactionActivity extends AppCompatActivity {
 
     // used for datepicker
     int _year, _month, _day;
@@ -128,7 +127,7 @@ public class NewTransactionActivity extends ActionBarActivity {
         // populate account spinners with all accounts from the database
         Cursor acCursor = MainActivity.myDb.getAllAccounts();
         SimpleCursorAdapter acAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
-                acCursor, new String[] {"NAME"}, new int[] {android.R.id.text1});
+                acCursor, new String[] {"NAME"}, new int[] {android.R.id.text1}, 0);
         acAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spWithdraw.setAdapter(acAdapter);
         spToAccount.setAdapter(acAdapter);

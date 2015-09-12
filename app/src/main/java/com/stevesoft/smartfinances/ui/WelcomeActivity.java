@@ -3,8 +3,8 @@ package com.stevesoft.smartfinances.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.stevesoft.smartfinances.R;
 import com.stevesoft.smartfinances.model.Account;
 
-public class WelcomeActivity extends ActionBarActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class WelcomeActivity extends ActionBarActivity {
         final EditText txtAccount_name = (EditText) findViewById(R.id.welcome_editText_account_name);
 
         String currencies[] = {"EUR", "USD", "GBP"};
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_spinner_item, currencies);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, currencies);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         spCurrency.setAdapter(spinnerArrayAdapter);
 
@@ -55,7 +55,7 @@ public class WelcomeActivity extends ActionBarActivity {
                 edit.putBoolean(getString(R.string.pref_previously_started), Boolean.TRUE);
                 // Save currency
                 edit.putString("CURRENCY", currency);
-                edit.commit();
+                edit.apply();
 
                 // start main activity
                 startActivity(new Intent(getBaseContext(), MainActivity.class));

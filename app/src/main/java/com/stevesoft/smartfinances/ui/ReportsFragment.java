@@ -3,10 +3,8 @@ package com.stevesoft.smartfinances.ui;
 
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -24,7 +21,6 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.ValueFormatter;
 import com.stevesoft.smartfinances.R;
 
 import java.util.ArrayList;
@@ -60,8 +56,8 @@ public class ReportsFragment extends Fragment {
         // get data from db for line chart
         Cursor c = MainActivity.myDb.getDailyExpenses();
         int count = c.getCount();
-        ArrayList<Integer> date = new ArrayList<Integer>();
-        ArrayList<Float> amount = new ArrayList<Float>();
+        ArrayList<Integer> date = new ArrayList<>();
+        ArrayList<Float> amount = new ArrayList<>();
 
         if (c.moveToFirst()){
             do {
@@ -168,13 +164,13 @@ public class ReportsFragment extends Fragment {
     private void setData(int count){
 
         // xVals contains the days of the month
-        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<String> xVals = new ArrayList<>();
         for (int i = 0; i < 32; i++) {
             xVals.add((i) + "");
         }
 
         // yVals contains the prices
-        ArrayList<Entry> yVals = new ArrayList<Entry>();
+        ArrayList<Entry> yVals = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
             yVals.add(new Entry( yData[i], xData[i] ));
@@ -199,7 +195,7 @@ public class ReportsFragment extends Fragment {
         // set1.setShader(new LinearGradient(0, 0, 0, mChart.getHeight(),
         // Color.BLACK, Color.WHITE, Shader.TileMode.MIRROR));
 
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1); // add the datasets
 
         // create a data object with the datasets
@@ -273,12 +269,12 @@ public class ReportsFragment extends Fragment {
     private void setBarChartData(int count) {
         String[] mMonths = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
-        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<String> xVals = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             xVals.add(mMonths[i % 12]);
         }
 
-        ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
 
         for (int i = 0; i < yDataMonthExpense.length; i++) {
             if (yDataMonthExpense[i] != null)
@@ -288,7 +284,7 @@ public class ReportsFragment extends Fragment {
         BarDataSet set1 = new BarDataSet(yVals1, "");
         set1.setBarSpacePercent(35f);
 
-        ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
+        ArrayList<BarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
 
         BarData barData = new BarData(xVals, dataSets);
