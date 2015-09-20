@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances;
+package com.stevesoft.smartfinances.ui.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+
+import com.stevesoft.smartfinances.R;
 
 
 /**

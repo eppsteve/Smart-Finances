@@ -20,4 +20,19 @@
     <string name="welcome_activity_content">Welcome to\nSmart Finances</string>
 
     <string name="pref_previously_started">HasPreviouslyRun</string>
+    <string name="caption_type">Type</string>
+    <string name="caption_rb_expense">Expense</string>
+    <string name="caption_rb_income">Income</string>
+    <string name="caption_rb_transfer">Transfer</string>
+    <string name="caption_price">Price</string>
+    <string name="caption_withdraw_from">Withdraw from</string>
+    <string name="caption_category">Category</string>
+    <string name="caption_description">Description</string>
+    <string name="caption_date">Date</string>
+    <string name="caption_pick_date">Pick</string>
+    <string name="button_cancel_title">Cancel</string>
+    <string name="button_save_title">Save</string>
+    <string name="account_name_title">Account Name</string>
+    <string name="caption_select_currency">Select Currency</string>
+    <string name="caption_initial_balance">Initial Balance</string>
 </resources>

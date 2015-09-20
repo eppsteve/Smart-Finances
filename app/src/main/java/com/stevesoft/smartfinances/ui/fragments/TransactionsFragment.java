@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances.ui;
+package com.stevesoft.smartfinances.ui.fragments;
 
 
 import android.database.Cursor;
@@ -16,7 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stevesoft.smartfinances.R;
-import com.stevesoft.smartfinances.TransactionsCursorAdapter;
+import com.stevesoft.smartfinances.ui.adapters.TransactionsCursorAdapter;
+import com.stevesoft.smartfinances.ui.activities.MainActivity;
 
 
 /**
@@ -69,6 +70,8 @@ public class TransactionsFragment extends Fragment {
 
         // Switch to new cursor and update contents of ListView
         transactionsAdapter.changeCursor(MainActivity.myDb.getAllTransactions());
+        transactionsAdapter.notifyDataSetChanged();
+        MainActivity.myDb.close();
     }
 
     // Define the callback when ActionMode is activated
@@ -109,8 +112,10 @@ public class TransactionsFragment extends Fragment {
 
                     // Delete transaction
                     if (MainActivity.myDb.deleteTransaction(id) > 0 ) {
-                        // update listView
-
+                        // Switch to new cursor and update contents of ListView
+                        transactionsAdapter.changeCursor(MainActivity.myDb.getAllTransactions());
+                        transactionsAdapter.notifyDataSetChanged();
+                        MainActivity.myDb.close();
                         Toast.makeText(getActivity(), "Transaction deleted!", Toast.LENGTH_SHORT).show();
                     }
                     else {

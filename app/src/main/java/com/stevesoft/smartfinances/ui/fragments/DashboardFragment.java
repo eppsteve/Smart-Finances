@@ -1,13 +1,11 @@
-package com.stevesoft.smartfinances.ui;
+package com.stevesoft.smartfinances.ui.fragments;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.AvoidXfermode;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +31,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.PercentFormatter;
 import com.stevesoft.smartfinances.R;
+import com.stevesoft.smartfinances.ui.activities.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -171,7 +170,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
         for (int i=0; i<yData.length; i++) {
             yVals1.add(new Entry(yData[i], i));
-            Log.e("yDATA: ", yData[i].toString());
+            //Log.e("yDATA: ", yData[i].toString());
         }
 
         ArrayList<String> xVals = new ArrayList<>();

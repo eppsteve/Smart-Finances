@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="#0099cc"
-    tools:context="com.stevesoft.smartfinances.ui.WelcomeActivity">
+    tools:context="com.stevesoft.smartfinances.ui.activities.WelcomeActivity">
 
     <TextView android:id="@+id/fullscreen_content"
         android:layout_width="match_parent"

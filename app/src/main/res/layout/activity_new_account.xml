@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stevesoft.smartfinances.ui.NewAccountActivity">
+    tools:context="com.stevesoft.smartfinances.ui.activities.NewAccountActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -13,8 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/new_activity_horizontal_margin"
+        android:paddingRight="@dimen/new_activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:layout_below="@id/toolbar">
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Account Name"
+        android:text="@string/account_name_title"
         android:id="@+id/lblName"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -37,34 +37,35 @@
         android:layout_below="@+id/lblName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:inputType="text" />
+
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+        <!--android:text="@string/caption_select_currency"-->
+        <!--android:id="@+id/lblCurrency"-->
+        <!--android:layout_below="@+id/txtAccountName"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:layout_marginTop="20dp" />-->
+
+    <!--<Spinner-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/spCurrency"-->
+        <!--android:layout_below="@+id/lblCurrency"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Select Currency"
-        android:id="@+id/lblCurrency"
-        android:layout_below="@+id/txtAccountName"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spCurrency"
-        android:layout_below="@+id/lblCurrency"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Initial Balance"
+        android:text="@string/caption_initial_balance"
         android:id="@+id/lblBalance"
-        android:layout_below="@+id/spCurrency"
+        android:layout_below="@+id/txtAccountName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="20dp" />
@@ -78,8 +79,7 @@
         android:layout_below="@+id/lblBalance"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:singleLine="true"
-        android:text="0" />
+        android:singleLine="true" />
 
     <LinearLayout
         style="?android:attr/buttonBarStyle"
@@ -92,7 +92,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/button_cancel_title"
             android:id="@+id/btnCancel"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_weight="1"/>
@@ -100,7 +100,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/button_save_title"
             android:id="@+id/btnSave"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_weight="1"/>

@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances.ui;
+package com.stevesoft.smartfinances.ui.fragments;
 
 
 import android.database.Cursor;
@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.stevesoft.smartfinances.R;
+import com.stevesoft.smartfinances.ui.activities.MainActivity;
 
 import java.util.ArrayList;
 

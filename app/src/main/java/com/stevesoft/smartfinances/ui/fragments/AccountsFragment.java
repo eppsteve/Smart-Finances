@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances.ui;
+package com.stevesoft.smartfinances.ui.fragments;
 
 
 import android.content.DialogInterface;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,8 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stevesoft.smartfinances.AccountsCursorAdapter;
+import com.stevesoft.smartfinances.ui.adapters.AccountsCursorAdapter;
 import com.stevesoft.smartfinances.R;
+import com.stevesoft.smartfinances.ui.activities.MainActivity;
 
 
 /**
@@ -75,6 +75,8 @@ public class AccountsFragment extends Fragment {
 
         // Switch to new cursor and update contents of ListView
         accountsAdapter.changeCursor(MainActivity.myDb.getAllAccounts());
+        accountsAdapter.notifyDataSetChanged();
+        MainActivity.myDb.close();
     }
 
     // Define the callback when ActionMode is activated
@@ -113,6 +115,10 @@ public class AccountsFragment extends Fragment {
 
                                     // Delete account
                                     if (MainActivity.myDb.deleteAccount(id) > 0 ) {
+                                        // Switch to new cursor and update contents of ListView
+                                        accountsAdapter.changeCursor(MainActivity.myDb.getAllAccounts());
+                                        accountsAdapter.notifyDataSetChanged();
+                                        MainActivity.myDb.close();
                                         Toast.makeText(getActivity(), "Account deleted!", Toast.LENGTH_SHORT).show();
                                     }else {
                                         Toast.makeText(getActivity(), "Could not delete account", Toast.LENGTH_SHORT).show();

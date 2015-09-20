@@ -24,6 +24,12 @@ public class Account {
         this.currency = currency;
     }
 
+    public Account(String name, double amount){
+        this.name = name;
+        this.amount = amount;
+
+    }
+
     // setters
     public void setName(){
         this.name = name;

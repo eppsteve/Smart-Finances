@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">0dp</dimen>
     <dimen name="transaction_activity_horizontal_margin">12dp</dimen>
     <dimen name="transaction_activity_vertical_margin">12dp</dimen>
+    <dimen name="new_activity_horizontal_margin">15dp</dimen>
 
 </resources>

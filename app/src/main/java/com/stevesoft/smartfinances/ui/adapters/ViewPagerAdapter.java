@@ -1,8 +1,13 @@
-package com.stevesoft.smartfinances.ui;
+package com.stevesoft.smartfinances.ui.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.stevesoft.smartfinances.ui.fragments.AccountsFragment;
+import com.stevesoft.smartfinances.ui.fragments.DashboardFragment;
+import com.stevesoft.smartfinances.ui.fragments.ReportsFragment;
+import com.stevesoft.smartfinances.ui.fragments.TransactionsFragment;
 
 
 /**

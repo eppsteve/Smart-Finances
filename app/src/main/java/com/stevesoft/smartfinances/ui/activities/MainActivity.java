@@ -1,4 +1,4 @@
-package com.stevesoft.smartfinances.ui;
+package com.stevesoft.smartfinances.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,8 @@ import android.view.MenuItem;
 
 import com.stevesoft.smartfinances.DatabaseHelper;
 import com.stevesoft.smartfinances.R;
+import com.stevesoft.smartfinances.ui.SlidingTabLayout;
+import com.stevesoft.smartfinances.ui.adapters.ViewPagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -86,11 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if (id == R.id.action_add){
+        if (id == R.id.action_add){
             Intent intent = new Intent(this, NewTransactionActivity.class);
             startActivity(intent);
         } else if (id == R.id.new_account){

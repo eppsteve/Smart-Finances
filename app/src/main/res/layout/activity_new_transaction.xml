@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.stevesoft.smartfinances.ui.NewTransactionActivity">
+    tools:context="com.stevesoft.smartfinances.ui.activities.NewTransactionActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -29,8 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Type"
+        android:text="@string/caption_type"
         android:id="@+id/lblType"
+        android:layout_marginTop="5dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -49,11 +50,8 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Expense"
+            android:text="@string/caption_rb_expense"
             android:id="@+id/rbExpense"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/textViewType"
-            android:layout_toRightOf="@+id/textViewType"
             android:layout_marginLeft="24dp"
             android:layout_marginStart="24dp"
             android:checked="true" />
@@ -61,21 +59,15 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Income"
+            android:text="@string/caption_rb_income"
             android:id="@+id/rbIncome"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/rbExpense"
-            android:layout_toEndOf="@+id/rbExpense"
             android:checked="false" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Transfer"
+            android:text="@string/caption_rb_transfer"
             android:id="@+id/rbTransfer"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/rbIncome"
-            android:layout_toEndOf="@+id/rbIncome"
             android:checked="false" />
     </RadioGroup>
 
@@ -83,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Price"
+        android:text="@string/caption_price"
         android:id="@+id/lblPrice"
         android:layout_below="@+id/radioGroup2"
         android:layout_alignParentLeft="true"
@@ -104,7 +96,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Withdraw from"
+        android:text="@string/caption_withdraw_from"
         android:id="@+id/lblWithdraw"
         android:layout_below="@+id/txtPrice"
         android:layout_alignParentLeft="true"
@@ -144,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Category"
+        android:text="@string/caption_category"
         android:id="@+id/lblCategory"
         android:layout_below="@+id/accountsContainer"
         android:layout_alignParentLeft="true"
@@ -165,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Description"
+        android:text="@string/caption_description"
         android:id="@+id/lblDescription"
         android:layout_below="@+id/spinnerCategory"
         android:layout_alignParentLeft="true"
@@ -179,13 +171,14 @@
         android:layout_below="@+id/lblDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:inputType="text" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Date"
+        android:text="@string/caption_date"
         android:id="@+id/lblDate"
         android:layout_below="@+id/txtDescription"
         android:layout_alignParentLeft="true"
@@ -195,7 +188,6 @@
     <TextView
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="ee"
         android:ems="10"
         android:id="@+id/txtDate"
         android:layout_below="@+id/lblDate"
@@ -207,7 +199,6 @@
         android:textSize="20sp"
         android:paddingLeft="20dp"
         android:textColor="@color/black" />
-
 
 
             <TextView
@@ -226,7 +217,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pick"
+        android:text="@string/caption_pick_date"
         android:id="@+id/btnDate"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
@@ -247,7 +238,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/button_cancel_title"
             android:id="@+id/btnCancel"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_weight="1"/>
@@ -255,7 +246,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/button_save_title"
             android:id="@+id/btnSave"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_weight="1"/>

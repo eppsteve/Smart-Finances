@@ -1,5 +1,6 @@
-package com.stevesoft.smartfinances.ui;
+package com.stevesoft.smartfinances.ui.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,8 @@ import com.stevesoft.smartfinances.R;
 import com.stevesoft.smartfinances.model.Account;
 
 public class NewAccountActivity extends AppCompatActivity {
+
+    private static final String SETTINGS = "smartfinances_settings";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +35,14 @@ public class NewAccountActivity extends AppCompatActivity {
     private void setUpGUI(){
         final TextView txtAccountName = (TextView) findViewById(R.id.txtAccountName);
         final TextView txtInitialBalance = (TextView) findViewById(R.id.txtInitialBalance);
-        final Spinner spCurrency = (Spinner) findViewById(R.id.spCurrency);
+//      final Spinner spCurrency = (Spinner) findViewById(R.id.spCurrency);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
         Button btnSave = (Button) findViewById(R.id.btnSave);
 
-        String currencies[] = {"EUR", "USD", "GBP"};
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, currencies);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
-        spCurrency.setAdapter(spinnerArrayAdapter);
+//        String currencies[] = {"EUR", "USD", "GBP"};
+//        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, currencies);
+//        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
+//        spCurrency.setAdapter(spinnerArrayAdapter);
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -51,8 +54,11 @@ public class NewAccountActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = txtAccountName.getText().toString();
                 double amount = Double.parseDouble(txtInitialBalance.getText().toString());
-                String currency = spCurrency.getSelectedItem().toString();
+//              String currency = spCurrency.getSelectedItem().toString();
 
+                //Get currency from SharedPreferences
+                SharedPreferences prefs = getSharedPreferences(SETTINGS, MODE_PRIVATE);
+                String currency = prefs.getString("CURRENCY", "EUR");
                 Account account = new Account(name, amount, currency);
 
                 if (MainActivity.myDb.insertAccount(account))
@@ -65,25 +71,4 @@ public class NewAccountActivity extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_new_account, menu);
-//        return true;
-//    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
