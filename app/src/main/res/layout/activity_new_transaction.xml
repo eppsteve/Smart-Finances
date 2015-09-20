@@ -21,9 +21,9 @@
     android:layout_height="wrap_content"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:paddingLeft="@dimen/transaction_activity_horizontal_margin"
+    android:paddingRight="@dimen/transaction_activity_horizontal_margin"
+    android:paddingTop="@dimen/transaction_activity_vertical_margin" >
 
     <TextView
         android:layout_width="wrap_content"

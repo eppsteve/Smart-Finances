@@ -2,10 +2,8 @@ package com.stevesoft.smartfinances.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,6 +17,8 @@ import com.stevesoft.smartfinances.model.Account;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    private static final String SETTINGS = "smartfinances_settings";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +29,8 @@ public class WelcomeActivity extends AppCompatActivity {
         final EditText txtInitial_balance = (EditText) findViewById(R.id.welcome_initial_balance);
         final EditText txtAccount_name = (EditText) findViewById(R.id.welcome_editText_account_name);
 
-        String currencies[] = {"EUR", "USD", "GBP"};
+        String currencies[] = {"EUR", "USD", "GBP", "ARS", "AUD", "BGN", "BRL", "CAD", "CHE",
+                "COP", "CZK", "DKK", "HKD", "HUF", "INR", "KRW", "NOK", "PLN", "RON", "RUB", "SEK", };
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_spinner_item, currencies);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
         spCurrency.setAdapter(spinnerArrayAdapter);
@@ -49,9 +50,10 @@ public class WelcomeActivity extends AppCompatActivity {
                 else
                     Toast.makeText(getApplicationContext(), "Failed to create new account.", Toast.LENGTH_SHORT).show();
 
-                // do not show welcome activity again
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                // Get shared preferences
+                SharedPreferences prefs = getSharedPreferences(SETTINGS, MODE_PRIVATE);
                 SharedPreferences.Editor edit = prefs.edit();
+                // do not show welcome activity again
                 edit.putBoolean(getString(R.string.pref_previously_started), Boolean.TRUE);
                 // Save currency
                 edit.putString("CURRENCY", currency);
@@ -64,12 +66,6 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_welcome, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

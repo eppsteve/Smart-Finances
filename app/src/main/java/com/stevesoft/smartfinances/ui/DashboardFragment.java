@@ -1,9 +1,13 @@
 package com.stevesoft.smartfinances.ui;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.AvoidXfermode;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,6 +55,8 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
     String current_month;
 
+    private static final String SETTINGS = "smartfinances_settings";
+
     public DashboardFragment() {
         // Required empty public constructor
     }
@@ -72,8 +78,13 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
 
         thisMonthExpenses = MainActivity.myDb.getThisMonthExpense();
         thisMonthIncome = MainActivity.myDb.getThisMonthIncome();
-        txtThisMonthIncome.setText(thisMonthIncome +" \u20ac");
-        txtThisMonthExpense.setText(thisMonthExpenses +" \u20ac");
+
+        // Get currency from SharedPreferences
+        SharedPreferences prefs = getActivity().getSharedPreferences(SETTINGS, Context.MODE_PRIVATE);
+        String currency = prefs.getString("CURRENCY", "EUR");
+
+        txtThisMonthIncome.setText(thisMonthIncome +" "+currency);
+        txtThisMonthExpense.setText(thisMonthExpenses +" "+currency);
 
         // Get current month balance
         Calendar cal= Calendar.getInstance();
@@ -83,7 +94,8 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
         txtThisMonth.setText(txtThisMonth.getText() + current_month);
         // round double to 2 decimal places
         // set month balance
-        txtThisMonthBalance.setText(String.format("%.2f", MainActivity.myDb.getThisMonthBalance()) + "EUR");
+        txtThisMonthBalance.setText(String.format("%.2f", MainActivity.myDb.getThisMonthBalance())
+                +" "+currency);
 
 
         // get current month expenses by category from db
@@ -162,7 +174,7 @@ public class DashboardFragment extends Fragment implements OnChartValueSelectedL
             Log.e("yDATA: ", yData[i].toString());
         }
 
-        ArrayList<String> xVals = new ArrayList<String>();
+        ArrayList<String> xVals = new ArrayList<>();
 
         for (int i=0; i<xData.length; i++)
             xVals.add(xData[i]);

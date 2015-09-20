@@ -60,6 +60,7 @@
         android:layout_toRightOf="@id/welcome_txt_account_name"
         android:text="My Account"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/welcome_editText_account_name"
         android:singleLine="true" />
 
@@ -81,6 +82,7 @@
         android:layout_below="@id/welcome_editText_account_name"
         android:layout_toRightOf="@id/welcome_txt_initial_balance"
         android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
         android:singleLine="true" />
 
     <Button android:id="@+id/dummy_button"

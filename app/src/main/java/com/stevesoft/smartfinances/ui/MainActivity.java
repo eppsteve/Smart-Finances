@@ -2,7 +2,6 @@ package com.stevesoft.smartfinances.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +14,8 @@ import com.stevesoft.smartfinances.R;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String SETTINGS = "smartfinances_settings";
 
     Toolbar toolbar;
     ViewPager pager;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         myDb = new DatabaseHelper(this);
 
         // If this is the first time the app runs, open the welcome activity
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences prefs = getSharedPreferences(SETTINGS, MODE_PRIVATE);
         boolean previouslyStarted = prefs.getBoolean(getString(R.string.pref_previously_started), false);
         if(!previouslyStarted) {
             startActivity(new Intent(this, WelcomeActivity.class));
